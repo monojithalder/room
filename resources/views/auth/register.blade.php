@@ -1,11 +1,14 @@
 @extends('layouts.master')
 @php($title = config('app.name'))
 @section('page-title','Register - '.$title)
+@section('custom-include')
+    <link rel="stylesheet" href="{{asset('css/custom_css/alertmessage.css')}}">
+@endsection
 @section('content')
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
+            <div class="panel panel-primary">
                 <div class="panel-heading">Register</div>
 
                 <div class="panel-body">

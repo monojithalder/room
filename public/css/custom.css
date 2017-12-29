@@ -1,6 +1,17 @@
+.navbar {
+    background-color: #4FC1E9 !important;
+}
 nav.navbar{
     border-radius: 0px !important;
 }
 nav.navbar a {
     color: #111 !important;
+}
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
+    color: #111;
+    background-color: transparent !important;
+}
+.form-horizontal .checkbox, .form-horizontal .radio {
+    min-height: 27px;
+    margin-left: 22px;
 }
