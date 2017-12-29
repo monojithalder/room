@@ -1,5 +1,6 @@
 @extends('layouts.master')
-
+@php($title = config('app.name'))
+@section('page-title','Dashboard - '.$title)
 @section('content')
 <div class="container">
     <div class="row">

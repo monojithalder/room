@@ -11,10 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
-
 Auth::routes();
 
+Route::get('/', 'DashboardController@index');
 Route::get('/dashboard', 'DashboardController@index');

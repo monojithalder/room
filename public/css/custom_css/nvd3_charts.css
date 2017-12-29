@@ -1,0 +1,22 @@
+
+#chart3 svg{
+  height: 300px;
+ margin-left: -100px;
+}
+#chart2 svg,#chart1 svg,#chart4 svg{
+  height: 300px;
+
+}
+#chart5 svg{height: 400px;
+}
+.bg-panel{
+	background:url(../../img/light_grey.png); 
+	height:100%;
+
+}
+.bg-panel-grn{
+	background: #4FC1E9;
+}
+#chart2 svg text {
+    fill:#fff;
+}

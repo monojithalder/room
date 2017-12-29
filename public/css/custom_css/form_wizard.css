@@ -1,0 +1,33 @@
+.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
+color: #fff;
+background-color: #48CFAD;
+}
+.nav-pills>li>a {
+border-radius: 0px;
+}
+.nav>li>a {
+position: relative;
+display: block;
+padding: 10px 15px;
+}
+.pager li>a{
+display: inline-block;
+padding: 5px 14px;
+background-color: #48CFAD;
+border: 1px solid #48CFAD;
+border-radius: 15px;
+color: #fff;
+}
+.pager li>a:hover{
+ background-color: #48CFAD;
+
+color: #fff; 
+}
+.pager li>span{
+  display: inline-block;
+padding: 5px 14px;
+background-color: #48CFAD;
+border: 1px solid #48CFAD;
+border-radius: 15px;
+color: #777;
+}
