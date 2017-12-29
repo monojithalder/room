@@ -1,2 +1,2 @@
 # room
-## A room automation Project built with Laravel 5.5
+## A Room Automation Project built with Laravel 5.5
