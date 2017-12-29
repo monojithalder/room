@@ -1,0 +1,6 @@
+nav.navbar{
+    border-radius: 0px !important;
+}
+nav.navbar > a {
+    color: #fff !important;
+}
