@@ -14,7 +14,7 @@
                 <div class="panel panel-info">
 
                     <div class="panel-heading">
-                        <h3 class="panel-title">{{ Auth::user()->role }} - Dashboard</h3>
+                        <h3 class="panel-title">User - Dashboard</h3>
                     </div>
 
                     <div class="panel-body">
@@ -23,67 +23,6 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-
-                        <div class="panel panel-lightgreen">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">FLOOR</h4>
-                            </div>
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-1 col-sm-6 col-xs-6 text-center">
-                                        <button class="button button-rounded button-flat-action sink" onclick="location.href='{{ url('/admin/floor/add') }}'">
-                                            Add
-                                        </button>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
-                                        <button class="button button-rounded button-flat-action sink">
-                                            View
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="panel panel-lightgreen">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">ROOM</h4>
-                            </div>
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-1 col-sm-6 col-xs-6 text-center">
-                                        <button class="button button-rounded button-flat-action sink">
-                                            Add
-                                        </button>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
-                                        <button class="button button-rounded button-flat-action sink">
-                                            View
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="panel panel-lightgreen">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">ITEM</h4>
-                            </div>
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-1 col-sm-6 col-xs-6 text-center">
-                                        <button class="button button-rounded button-flat-action sink">
-                                            Add
-                                        </button>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
-                                        <button class="button button-rounded button-flat-action sink">
-                                            View
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
 

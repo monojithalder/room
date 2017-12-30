@@ -17,5 +17,7 @@ Route::get('/', 'DashboardController@index');
 Route::get('/dashboard', 'DashboardController@index');
 
 Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
+    Route::get('', 'DashboardController@index');
+    Route::get('/dashboard', 'DashboardController@index');
     Route::get('/floor/add', 'AdminController@addFloor');
 });
