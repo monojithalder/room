@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFloorTable extends Migration
+class CreateItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,14 @@ class CreateFloorTable extends Migration
      */
     public function up()
     {
-        Schema::create('floor', function (Blueprint $table) {
+        Schema::create('items', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('room_id');
             $table->string('name');
             $table->string('status');
+            $table->string('on_off_status');
+            $table->string('output_pin');
+            $table->string('input_pin');
         });
     }
 
@@ -27,6 +31,6 @@ class CreateFloorTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('floor');
+        Schema::dropIfExists('items');
     }
 }

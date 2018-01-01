@@ -16,8 +16,8 @@ class AdminController extends Controller
         $this->middleware('auth');
     }
 
-    public function addFloor(){
-        echo "Hi";
+    public function floor(){
+        return view('floors.add');
     }
 
 }

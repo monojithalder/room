@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAccessLogTable extends Migration
+class CreateAccessLogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateAccessLogTable extends Migration
      */
     public function up()
     {
-        Schema::create('access_log', function (Blueprint $table) {
+        Schema::create('access_logs', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('item_id');
@@ -29,6 +29,6 @@ class CreateAccessLogTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('access_log');
+        Schema::dropIfExists('access_logs');
     }
 }
