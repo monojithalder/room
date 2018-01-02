@@ -18,6 +18,7 @@ class CreateItemsTable extends Migration
             $table->integer('room_id');
             $table->string('name');
             $table->string('status');
+            $table->string('item_code');
             $table->string('on_off_status');
             $table->string('output_pin');
             $table->string('input_pin');
