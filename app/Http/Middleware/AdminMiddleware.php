@@ -20,7 +20,7 @@ class AdminMiddleware
         {
             return redirect('/');
         }
-        if (Auth::user()->role == 'Admin') {
+        if (Auth::user()->role == 'ADMIN') {
             return $next($request);
         }
         else {

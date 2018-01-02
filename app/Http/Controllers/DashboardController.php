@@ -24,11 +24,11 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->role == 'Admin'){
+        if(Auth::user()->role == 'ADMIN'){
             return view('admin.dashboard');
         }
 
-        if(Auth::user()->role == 'User'){
+        if(Auth::user()->role == 'USER'){
             return view('dashboard');
         }
     }

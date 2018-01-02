@@ -9,6 +9,7 @@
 @endsection
 @section('content')
     <div class="container">
+        @include('inc.messages')
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-info">
@@ -31,12 +32,12 @@
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-1 col-sm-6 col-xs-6 text-center">
-                                        <button class="button button-rounded button-flat-action sink" onclick="location.href='{{ url('/admin/floor/add') }}'">
-                                            Add
+                                        <button class="button button-rounded button-flat-action sink" onclick="location.href='{{ url('/admin/floor/insert') }}'">
+                                            Insert
                                         </button>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
-                                        <button class="button button-rounded button-flat-action sink">
+                                        <button class="button button-rounded button-flat-action sink" onclick="location.href='{{ url('/admin/floors') }}'">
                                             View
                                         </button>
                                     </div>
@@ -52,7 +53,7 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-1 col-sm-6 col-xs-6 text-center">
                                         <button class="button button-rounded button-flat-action sink">
-                                            Add
+                                            Insert
                                         </button>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
@@ -72,7 +73,7 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-1 col-sm-6 col-xs-6 text-center">
                                         <button class="button button-rounded button-flat-action sink">
-                                            Add
+                                            Insert
                                         </button>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
