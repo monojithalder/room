@@ -20,11 +20,6 @@
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
                 <li><a href="{{ url('/') }}">Dashboard</a></li>
-                @if(!Auth::guest())
-                    @if(Auth::user()->role == 'ADMIN')
-                        <li><a href="{{ route('register') }}">Add New User</a></li>
-                    @endif
-                @endif
             </ul>
 
             <!-- Right Side Of Navbar -->

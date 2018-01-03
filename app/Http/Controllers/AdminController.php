@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Floor;
+use App\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -19,16 +20,16 @@ class AdminController extends Controller
 
     public function floors(){
         $floors = Floor::all();
-        return view('floors.index')->with('floors',$floors);
+        return view('admin.floors.index')->with('floors',$floors);
     }
 
     public function floorInsertForm(){
-        return view('floors.insert');
+        return view('admin.floors.insert');
     }
 
     public function floorEditForm($id){
         $floor = Floor::find($id);
-        return view('floors.edit')->with('floor',$floor);
+        return view('admin.floors.edit')->with('floor',$floor);
     }
 
     public function floorUpdate(Request $request){
@@ -64,6 +65,16 @@ class AdminController extends Controller
         }
         $floor->delete();
         return redirect($redirect)->with('success','Floor Deleted Successfully.');
+    }
+
+    public function users(){
+        $users = User::all();
+        return view('admin.users.index')->with('users',$users);
+    }
+
+    public function userEditForm($id){
+        $user = User::find($id);
+        return view('admin.users.edit')->with('user',$user);
     }
 
 }

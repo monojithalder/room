@@ -27,4 +27,7 @@ Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
     Route::get('/floor/edit/{id}', ['uses' =>'AdminController@floorEditForm']);
     Route::post('/floor/edit/{id}', ['uses' =>'AdminController@floorUpdate']);
     Route::get('/floor/delete/{id}', ['uses' =>'AdminController@floorDelete']);
+
+    Route::get('/users', ['uses' =>'AdminController@users']);
+    Route::get('/user/edit/{id}', ['uses' =>'AdminController@userEditForm']);
 });

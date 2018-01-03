@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @php($title = config('app.name'))
-@section('page-title','Update Floor - '.$title)
+@section('page-title','Update User - '.$title)
 @section('custom-include')
     <link rel="stylesheet" href="{{asset('css/custom_css/alertmessage.css')}}">
 @endsection
@@ -12,28 +12,28 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            Update Floor
+                            Update User
                         </h3>
                     </div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" action="{{ url('/admin/floor/edit/'.$floor->id) }}"
+                        <form class="form-horizontal" role="form" action="{{ url('/admin/user/edit/'.$user->id) }}"
                               method="post">
                             <div class="form-group">
                                 <label for="name" class="col-sm-2 control-label">Name</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="name" name="name"
-                                           placeholder="Floor Name" value="{{ $floor->name }}">
+                                           placeholder="Floor Name" value="{{ $user->name }}">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="status" class="col-sm-2 control-label">Input text</label>
+                                <label for="status" class="col-sm-2 control-label">Role</label>
                                 <div class="col-sm-10">
-                                    <select id="status" class="form-control" name="status" required>
-                                        <option value="ACTIVE" @if($floor->status == 'ACTIVE'){{ 'selected'}}@endif>
-                                            ACTIVE
+                                    <select id="status" class="form-control" name="role" required>
+                                        <option value="USER" @if($user->role == 'USER'){{ 'selected'}}@endif>
+                                            USER
                                         </option>
-                                        <option value="INACTIVE" @if($floor->status == 'INACTIVE'){{ 'selected'}}@endif>
-                                            INACTIVE
+                                        <option value="ADMIN" @if($user->role == 'ADMIN'){{ 'selected'}}@endif>
+                                            ADMIN
                                         </option>
                                     </select>
                                 </div>
@@ -42,10 +42,10 @@
                             <div class="form-group">
                                 <div class="col-sm-12" style="display: flex;justify-content: flex-end">
                                     <a class="btn btn-info" style="margin-right: 20px;"
-                                       href="{{ url('/admin/floors') }}">
+                                       href="{{ url('/admin/users') }}">
                                         BACK
                                     </a>
-                                    @php($deleteUrl = "/admin/floor/delete/" . $floor->id)
+                                    @php($deleteUrl = "/admin/floor/delete/" . $user->id)
                                     <a class="btn btn-danger" style="margin-right: 20px;"
                                        onclick="return confirmDelete('{{ $deleteUrl }}')">
                                         DELETE
