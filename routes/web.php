@@ -39,4 +39,11 @@ Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
 		Route::get('/room/edit/{id}', ['uses' =>'AdminController@roomEditForm']);
 		Route::post('/room/edit/{id}', ['uses' =>'AdminController@roomUpdate']);
 		Route::get('/room/delete/{id}', ['uses' =>'AdminController@roomDelete']);
+
+	Route::get('/items', 'AdminController@items');
+	Route::get('/item/insert', 'AdminController@itemInsertForm');
+	Route::post('/item/insert', 'AdminController@itemUpdate');
+	Route::get('/item/edit/{id}', ['uses' =>'AdminController@itemEditForm']);
+	Route::post('/item/edit/{id}', ['uses' =>'AdminController@itemUpdate']);
+	Route::get('/item/delete/{id}', ['uses' =>'AdminController@itemDelete']);
 });

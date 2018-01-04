@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Floor;
 use App\Room;
 use App\User;
+use App\Item;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -147,6 +148,7 @@ class AdminController extends Controller
 				return redirect($redirect)->with('error','Room Does Not Exist');
 			}
 			$room->name = $request->input('name');
+			$room->floor_id = $request->input('floor');
 			$room->status = $request->input('status');
 			$room->save();
 			return redirect($redirect)->with('success','Room Updated Successfully.');
@@ -163,6 +165,67 @@ class AdminController extends Controller
 		}
 		$room->delete();
 		return redirect($redirect)->with('success','Room Deleted Successfully.');
+	}
+
+	public function items(){
+		$items = Item::all();
+		return view('admin.items.index')->with('items',$items);
+	}
+
+	public function itemInsertForm(){
+		$rooms = Room::all();
+		return view('admin.items.insert',compact('rooms'));
+	}
+
+	public function itemEditForm($id){
+		$item = Item::find($id);
+		$rooms = Room::all();
+		return view('admin.items.edit',compact('item','rooms'));
+	}
+
+	public function itemUpdate(Request $request){
+
+		$redirect = '/admin/items';
+
+		if($request->id == null){
+			$item = new Item();
+			$item->name = $request->input('name');
+			$item->room_id = $request->input('room_id');
+			$item->item_code	 = $request->input('item_code');
+			$item->on_off_status = $request->input('on_off_status');
+			$item->output_pin = $request->input('output_pin');
+			$item->input_pin = $request->input('input_pin');
+			$item->status = $request->input('status');
+			$item->save();
+			return redirect($redirect)->with('success','Item Inserted Successfully.');
+		}
+		else{
+			$item = Item::find($request->id);
+			if($item == null){
+				return redirect($redirect)->with('error','Item Does Not Exist');
+			}
+			$item->name = $request->input('name');
+			$item->room_id = $request->input('room_id');
+			$item->item_code	 = $request->input('item_code');
+			$item->on_off_status = $request->input('on_off_status');
+			$item->output_pin = $request->input('output_pin');
+			$item->input_pin = $request->input('input_pin');
+			$item->status = $request->input('status');
+			$item->save();
+			return redirect($redirect)->with('success','Item Updated Successfully.');
+		}
+	}
+
+	public function itemDelete(Request $request){
+
+		$redirect = '/admin/items';
+
+		$item = Item::find($request->id);
+		if($item == null){
+			return redirect($redirect)->with('error','Item Does Not Exist');
+		}
+		$item->delete();
+		return redirect($redirect)->with('success','Item Deleted Successfully.');
 	}
 
 }

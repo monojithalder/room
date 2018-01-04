@@ -76,12 +76,13 @@
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-1 col-sm-6 col-xs-6 text-center">
-                                        <button class="button button-rounded button-flat-action sink">
+                                        <button class="button button-rounded button-flat-action sink" onclick="location.href='{{ url('/admin/room/insert') }}'">
                                             Insert
                                         </button>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
-                                        <button class="button button-rounded button-flat-action sink">
+                                        <button class="button button-rounded button-flat-action sink" onclick="location.href='{{ url('/admin/rooms') }}'">
+
                                             View
                                         </button>
                                     </div>
@@ -96,12 +97,13 @@
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-1 col-sm-6 col-xs-6 text-center">
-                                        <button class="button button-rounded button-flat-action sink">
+                                        <button class="button button-rounded button-flat-action sink" onclick="location.href='{{ url('/admin/item/insert') }}'">
                                             Insert
                                         </button>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
-                                        <button class="button button-rounded button-flat-action sink">
+                                        <button class="button button-rounded button-flat-action sink" onclick="location.href='{{ url('/admin/items') }}'">
+
                                             View
                                         </button>
                                     </div>
