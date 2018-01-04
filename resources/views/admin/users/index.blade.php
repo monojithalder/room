@@ -7,10 +7,14 @@
 @section('content')
     <div class="container">
         @include('inc.messages')
+        <div class="jumbotron">
+            <h2>List of Users</h2>
+        </div>
         <table id="mytable" class="table table-bordred table-striped">
             <thead>
             <tr>
                 <th>ID</th>
+                <th>Username</th>
                 <th>Name</th>
                 <th>Role</th>
                 <th>Edit</th>
@@ -21,6 +25,7 @@
             @foreach($users as $user)
                 <tr>
                     <td>{{ $user->id }}</td>
+                    <td>{{ $user->username }}</td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->role }}</td>
                     <td>

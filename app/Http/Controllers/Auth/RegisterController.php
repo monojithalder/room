@@ -83,6 +83,6 @@ class RegisterController extends Controller
 
         event(new Registered($user = $this->create($request->all())));
 
-        return redirect(url('/dashboard')); // Change this route to your needs
+        return redirect(url('/admin/users'))->with('success','New User Created Successfully.'); // Change this route to your needs
     }
 }

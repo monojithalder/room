@@ -7,6 +7,9 @@
 @section('content')
     <div class="container">
         @include('inc.messages')
+        <div class="jumbotron">
+            <h2>List of Floors</h2>
+        </div>
         <table id="mytable" class="table table-bordred table-striped">
             <thead>
             <tr>

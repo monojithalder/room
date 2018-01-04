@@ -30,4 +30,6 @@ Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
 
     Route::get('/users', ['uses' =>'AdminController@users']);
     Route::get('/user/edit/{id}', ['uses' =>'AdminController@userEditForm']);
+    Route::post('/user/edit/{id}', ['uses' =>'AdminController@userUpdate']);
+    Route::get('/user/delete/{id}', ['uses' =>'AdminController@userDelete']);
 });

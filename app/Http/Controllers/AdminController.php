@@ -77,4 +77,39 @@ class AdminController extends Controller
         return view('admin.users.edit')->with('user',$user);
     }
 
+    public function userUpdate(Request $request){
+
+        $redirect = '/admin/users';
+
+        $user = User::find($request->id);
+        if($user == null){
+            return redirect($redirect)->with('error','User Does Not Exist');
+        }
+
+        $checkUserName = User::where('username',$request->input('username'))->where('id','<>',$request->id)->get()->toArray();
+        if(sizeof($checkUserName) == 0){
+            $user->name = $request->input('name');
+            $user->role = $request->input('role');
+            $user->username = $request->input('username');
+            $user->save();
+            return redirect($redirect)->with('success','User Updated Successfully.');
+        }
+        else{
+            return redirect('/admin/user/edit/'.$request->id)->with('error','Username not available.');
+        }
+
+    }
+
+    public function userDelete(Request $request){
+
+        $redirect = '/admin/users';
+
+        $user = User::find($request->id);
+        if($user == null){
+            return redirect($redirect)->with('error','User Does Not Exist');
+        }
+        $user->delete();
+        return redirect($redirect)->with('success','User Deleted Successfully.');
+    }
+
 }

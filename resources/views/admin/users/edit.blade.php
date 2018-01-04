@@ -6,6 +6,7 @@
 @endsection
 @section('content')
     <div class="container">
+        @include('inc.messages')
         <div class="row">
             <div class="col-sm-2"></div>
             <div class="col-sm-8">
@@ -23,6 +24,13 @@
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="name" name="name"
                                            placeholder="Floor Name" value="{{ $user->name }}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="name" class="col-sm-2 control-label">Username</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="username" name="username"
+                                           placeholder="Username" value="{{ $user->username }}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -45,7 +53,7 @@
                                        href="{{ url('/admin/users') }}">
                                         BACK
                                     </a>
-                                    @php($deleteUrl = "/admin/floor/delete/" . $user->id)
+                                    @php($deleteUrl = "/admin/user/delete/" . $user->id)
                                     <a class="btn btn-danger" style="margin-right: 20px;"
                                        onclick="return confirmDelete('{{ $deleteUrl }}')">
                                         DELETE
