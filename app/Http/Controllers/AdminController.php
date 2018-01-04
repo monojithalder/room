@@ -148,7 +148,7 @@ class AdminController extends Controller
 				return redirect($redirect)->with('error','Room Does Not Exist');
 			}
 			$room->name = $request->input('name');
-			$room->floor_id = $request->input('floor');
+			$room->floor_id = $request->input('floor_id');
 			$room->status = $request->input('status');
 			$room->save();
 			return redirect($redirect)->with('success','Room Updated Successfully.');

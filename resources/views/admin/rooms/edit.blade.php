@@ -28,7 +28,7 @@
                             <div class="form-group">
                                 <label for="status" class="col-sm-2 control-label">Floor</label>
                                 <div class="col-sm-10">
-                                    <select id="status" class="form-control" name="status" required>
+                                    <select id="floor_id" class="form-control" name="floor_id" required>
                                         @foreach($floors as $key =>  $value)
                                             <option value="{{ $value->id }}" @if($value->id == $room->floor_id) selected="selected" @endif>{{ $value->name }}</option>
                                         @endforeach
