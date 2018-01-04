@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @php($title = config('app.name'))
-@section('page-title','Add Floor - '.$title)
+@section('page-title','Add Room - '.$title)
 @section('custom-include')
     <link rel="stylesheet" href="{{asset('css/custom_css/alertmessage.css')}}">
 @endsection

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @php($title = config('app.name'))
-@section('page-title','Floors - '.$title)
+@section('page-title','Rooms - '.$title)
 @section('custom-include')
     <link rel="stylesheet" href="{{asset('css/custom_css/alertmessage.css')}}">
 @endsection
@@ -8,7 +8,7 @@
     <div class="container">
         @include('inc.messages')
         <div class="jumbotron">
-            <h2>List of Floors</h2>
+            <h2>List of Rooms</h2>
         </div>
         <table id="mytable" class="table table-bordred table-striped">
             <thead>
