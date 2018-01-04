@@ -14,7 +14,8 @@
 Auth::routes();
 
 Route::get('/', 'DashboardController@index');
-Route::get('/dashboard', 'DashboardController@index');
+//Route::get('/dashboard', 'DashboardController@index');
+Route::get('/dashboard', ['uses' =>'DashboardController@index']);
 
 Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
 
@@ -33,12 +34,12 @@ Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
     Route::post('/user/edit/{id}', ['uses' =>'AdminController@userUpdate']);
     Route::get('/user/delete/{id}', ['uses' =>'AdminController@userDelete']);
 
-		Route::get('/rooms', 'AdminController@rooms');
-		Route::get('/room/insert', 'AdminController@roomInsertForm');
-		Route::post('/room/insert', 'AdminController@roomUpdate');
-		Route::get('/room/edit/{id}', ['uses' =>'AdminController@roomEditForm']);
-		Route::post('/room/edit/{id}', ['uses' =>'AdminController@roomUpdate']);
-		Route::get('/room/delete/{id}', ['uses' =>'AdminController@roomDelete']);
+    Route::get('/rooms', 'AdminController@rooms');
+    Route::get('/room/insert', 'AdminController@roomInsertForm');
+    Route::post('/room/insert', 'AdminController@roomUpdate');
+    Route::get('/room/edit/{id}', ['uses' =>'AdminController@roomEditForm']);
+    Route::post('/room/edit/{id}', ['uses' =>'AdminController@roomUpdate']);
+    Route::get('/room/delete/{id}', ['uses' =>'AdminController@roomDelete']);
 
 	Route::get('/items', 'AdminController@items');
 	Route::get('/item/insert', 'AdminController@itemInsertForm');
