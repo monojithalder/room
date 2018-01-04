@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Floor;
+use App\Room;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -111,5 +112,57 @@ class AdminController extends Controller
         $user->delete();
         return redirect($redirect)->with('success','User Deleted Successfully.');
     }
+
+	public function rooms(){
+		$rooms = Room::all();
+		return view('admin.rooms.index')->with('rooms',$rooms);
+	}
+
+	public function roomInsertForm(){
+		$floors = Floor::all();
+		return view('admin.rooms.insert',compact('floors'));
+	}
+
+	public function roomEditForm($id){
+		$room = Room::find($id);
+		$floors = Floor::all();
+		return view('admin.rooms.edit',compact('room','floors'));
+	}
+
+	public function roomUpdate(Request $request){
+
+		$redirect = '/admin/rooms';
+
+		if($request->id == null){
+			$room = new Room();
+			$room->name = $request->input('name');
+			$room->floor_id = $request->input('floor_id');
+			$room->status = $request->input('status');
+			$room->save();
+			return redirect($redirect)->with('success','Room Inserted Successfully.');
+		}
+		else{
+			$room = Room::find($request->id);
+			if($room == null){
+				return redirect($redirect)->with('error','Room Does Not Exist');
+			}
+			$room->name = $request->input('name');
+			$room->status = $request->input('status');
+			$room->save();
+			return redirect($redirect)->with('success','Room Updated Successfully.');
+		}
+	}
+
+	public function roomDelete(Request $request){
+
+		$redirect = '/admin/rooms';
+
+		$room = Room::find($request->id);
+		if($room == null){
+			return redirect($redirect)->with('error','Room Does Not Exist');
+		}
+		$room->delete();
+		return redirect($redirect)->with('success','Room Deleted Successfully.');
+	}
 
 }
