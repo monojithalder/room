@@ -57,7 +57,7 @@
                                 <div class="flex-grid">
                                     @foreach($floors as $floor)
                                         @php($url = '/dashboard?fid='.$floor->id)
-                                        <div class="col" onclick="location.href='{{ url($url) }}'">
+                                        <div class="col" onclick="location.href='{{ url($url) }}'" @if(app('request')->input('fid') == $floor->id) style="background-color: #0F9E5E" @endif >
                                             <h3>{{ $floor->name }}</h3></div>
                                     @endforeach
                                 </div>
@@ -67,7 +67,7 @@
                         @if(sizeof($rooms) > 0)
                             <div class="panel panel-lightgreen">
                                 <div class="panel-heading">
-                                    <h4 class="panel-title">List of Floors</h4>
+                                    <h4 class="panel-title">List of Rooms</h4>
                                 </div>
                                 <div class="panel-body">
                                     <div class="flex-grid">
