@@ -18,6 +18,7 @@ Route::get('/', 'DashboardController@index');
 Route::get('/dashboard', ['uses' =>'DashboardController@index']);
 
 Route::get('/floors', ['uses' =>'UserController@index']);
+Route::get('/room/{id}', ['uses' =>'UserController@room']);
 
 Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
 

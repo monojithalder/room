@@ -60,7 +60,8 @@
                         <div class="panel-body">
                             <div class="flex-grid">
                                 @foreach($rooms as $room)
-                                    <div class="col"><h3>{{ $room->name }}</h3></div>
+                                    @php($url = '/room/'.$room->id)
+                                    <div class="col" onclick="location.href='{{ url($url) }}'"><h3>{{ $room->name }}</h3></div>
                                 @endforeach
                             </div>
                         </div>
