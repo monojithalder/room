@@ -45,7 +45,7 @@
                             <div class="form-group">
                                 <label for="name" class="col-sm-2 control-label">Room</label>
                                 <div class="col-sm-10">
-                                    <select id="status" class="form-control" name="floor_id" required>
+                                    <select id="status" class="form-control" name="room_id" required>
                                         @foreach($rooms as $key => $value)
                                             <option value="{{ $value->id }}">{{ $value->name }}</option>
                                         @endforeach
