@@ -52,7 +52,10 @@
                             <div class="panel-body">
                                 <div class="flex-grid">
                                     @foreach($items as $item)
-                                        <div class="col">
+                                        {{--<div class="col" onclick="location.href='{{ url('/task/'.$item->item_code) }}'">--}}
+                                        {{--<h3>{{ $item->name }}</h3>--}}
+                                        {{--</div>--}}
+                                        <div class="col" onclick="return task('{{ $item->item_code }}')">
                                             <h3>{{ $item->name }}</h3>
                                         </div>
                                     @endforeach
@@ -66,4 +69,16 @@
             </div>
         </div>
     </div>
+@endsection
+@section('custom-script')
+    <script>
+        function task(id) {
+            let url = '/task/' + id;
+            $.ajax({
+                url: url, success: function (result) {
+                    console.log(result);
+                }
+            });
+        }
+    </script>
 @endsection

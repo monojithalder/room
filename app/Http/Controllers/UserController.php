@@ -31,4 +31,19 @@ class UserController extends Controller
         $items = Item::where('room_id', '=', $id)->get();
         return view('rooms.index')->with('room',$room)->with('items',$items);
     }
+
+    public function task($id){
+        $curl = curl_init();
+        $post_fields = array('pinNo' => $id);
+        $url = 'http://192.168.1.14';
+        curl_setopt($curl, CURLOPT_PORT, 8088);
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_POST, 1); // Do a regular HTTP POST
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type:multipart/form-data"));
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $post_fields); // Set POST data
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+        $response = curl_exec($curl);
+        //$response = json_decode($response, 1);
+        var_dump($response);
+    }
 }
