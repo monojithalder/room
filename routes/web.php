@@ -17,6 +17,8 @@ Route::get('/', 'DashboardController@index');
 //Route::get('/dashboard', 'DashboardController@index');
 Route::get('/dashboard', ['uses' =>'DashboardController@index']);
 
+Route::get('/floors', ['uses' =>'UserController@index']);
+
 Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
 
     Route::get('', 'DashboardController@index');

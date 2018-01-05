@@ -42,42 +42,19 @@
                         <h3 class="panel-title">User - Dashboard</h3>
                     </div>
 
-                    <div class="panel-body">
+                    <div class="panel-body" style="text-align: center">
                         @if (session('status'))
                             <div class="alert alert-success">
                                 {{ session('status') }}
                             </div>
                         @endif
 
-                        <div class="panel panel-lightgreen">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">List of Floors</h4>
-                            </div>
-                            <div class="panel-body">
-                                <div class="flex-grid">
-                                    @foreach($floors as $floor)
-                                        @php($url = '/dashboard?fid='.$floor->id)
-                                        <div class="col" onclick="location.href='{{ url($url) }}'" @if(app('request')->input('fid') == $floor->id) style="background-color: #0F9E5E" @endif >
-                                            <h3>{{ $floor->name }}</h3></div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
+                        <h2>Welcome - {{ Auth::user()->name }}</h2>
 
-                        @if(sizeof($rooms) > 0)
-                            <div class="panel panel-lightgreen">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">List of Rooms</h4>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="flex-grid">
-                                        @foreach($rooms as $room)
-                                            <div class="col"><h3>{{ $room->name }}</h3></div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
+                            <a href="{{ url('/floors') }}" class="btn btn-success btn-lg btn-block" role="button" style="margin-top: 64px">
+                                <span class="glyphicon glyphicon-globe"></span>
+                                Enter
+                            </a>
 
                     </div>
                 </div>

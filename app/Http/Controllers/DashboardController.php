@@ -31,12 +31,7 @@ class DashboardController extends Controller
         }
 
         if(Auth::user()->role == 'USER'){
-
-            $fid = $request->input('fid');
-
-            $floors = Floor::all();
-            $rooms = Room::where('floor_id', '=', $fid)->get();
-            return view('dashboard')->with('floors',$floors)->with('rooms',$rooms);
+            return view('dashboard');
         }
     }
 }
