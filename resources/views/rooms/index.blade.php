@@ -73,7 +73,7 @@
 @section('custom-script')
     <script>
         function task(id) {
-            let url = '/task/' + id;
+            var url = "{{ URL::to('/task') }}" + "/" + id;
             $.ajax({
                 url: url, success: function (result) {
                     console.log(result);

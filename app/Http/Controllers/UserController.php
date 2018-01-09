@@ -35,8 +35,9 @@ class UserController extends Controller
     public function task($id){
         $curl = curl_init();
         $post_fields = array('pinNo' => $id);
-        $url = 'http://192.168.1.14';
-        curl_setopt($curl, CURLOPT_PORT, 8088);
+        $url = env('PYTHON_SERVER_URL', '');
+        $port = env('PYTHON_SERVER_PORT','');
+        curl_setopt($curl, CURLOPT_PORT, $port);
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_POST, 1); // Do a regular HTTP POST
         curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type:multipart/form-data"));
