@@ -30,13 +30,24 @@
         .col > h3 {
             margin: 0;
         }
+        .hide {
+            display: none;
+        }
+        .show {
+            display: block;
+        }
     </style>
 @endsection
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-
+                <div class="alert alert-success hide" id="alert-success">
+                    <strong>Success!</strong> Request Process Successfully Done.
+                </div>
+                <div class="alert alert-danger hide" id="alert-error">
+                    Something Wrong
+                </div>
                 <div class="panel panel-info">
 
                     <div class="panel-heading">
@@ -53,12 +64,6 @@
                                 <div class="flatbuttons">
                                     <ul>
                                     @foreach($items as $item)
-                                        {{--<div class="col" onclick="location.href='{{ url('/task/'.$item->item_code) }}'">--}}
-                                        {{--<h3>{{ $item->name }}</h3>--}}
-                                        {{--</div>--}}
-                                        {{--<div class="col" onclick="return task('{{ $item->item_code }}')">
-                                            <h3>{{ $item->name }}</h3>
-                                        </div>--}}
                                         <li>
                                             <a href="#" onclick="task('{{ $item->item_code }}')" class="button button-rounded button-flat-primary hang">{{ $item->name }}</a>
                                         </li>
@@ -83,10 +88,18 @@
             $.ajax({
                 url: url, success: function (result) {
                     if(result == 1) {
+                        $("#alert-success").addClass('show');
+                        $("#alert-success").removeClass('hide');
 
+                        $("#alert-error").addClass('hide');
+                        $("#alert-error").removeClass('show');
                     }
                     else {
+                        $("#alert-success").addClass('hide');
+                        $("#alert-success").removeClass('show');
 
+                        $("#alert-error").addClass('show');
+                        $("#alert-error").removeClass('hide');
                     }
                     console.log(result);
                 }
