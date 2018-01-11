@@ -48,10 +48,21 @@ class UserController extends Controller
         $response = curl_exec($curl);
         $response = json_decode($response, 1);
         if($response['success'] == 1) {
-        	echo 1;
+        	$item_model = new Item();
+        	$item = $item_model->where('item_code','=',$id)->get()->toArray();
+        	$on_off_status = $item[0]['on_off_status'];
+        	if($on_off_status == 'OFF') {
+        		$item_model->where('item_code','=',$id)->update(['on_off_status' => 'ON']);
+						$on_off_status = 'ON';
+					}
+					else {
+						$item_model->where('item_code','=',$id)->update(['on_off_status' => 'OFF']);
+						$on_off_status = 'OFF';
+					}
+        	echo '{"success": 1,"status" : "'.$on_off_status.'"}';
 				}
 				else {
-        	echo 0;
+        	echo '{"success" : 0}';
 				}
         //var_dump($response);
     }

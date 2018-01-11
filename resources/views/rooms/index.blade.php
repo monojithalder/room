@@ -65,7 +65,7 @@
                                     <ul>
                                     @foreach($items as $item)
                                         <li>
-                                            <a href="#" onclick="task('{{ $item->item_code }}')" class="button button-rounded button-flat-primary hang">{{ $item->name }}</a>
+                                            <a href="#" id="{{ $item->item_code }}" onclick="task('{{ $item->item_code }}')" class="button button-rounded @if($item->on_off_status == 'ON')button-flat-primary @else button-flat-caution @endif">{{ $item->name }}</a>
                                         </li>
 
                                     @endforeach
@@ -87,12 +87,21 @@
             var url = "{{ URL::to('/task') }}" + "/" + id;
             $.ajax({
                 url: url, success: function (result) {
-                    if(result == 1) {
+                    result = JSON.parse(result);
+                    if(result.success == 1) {
                         $("#alert-success").addClass('show');
                         $("#alert-success").removeClass('hide');
 
                         $("#alert-error").addClass('hide');
                         $("#alert-error").removeClass('show');
+                        if(result.status == 'ON') {
+                            $("#"+id).removeClass('button-flat-caution');
+                            $("#"+id).addClass('button-flat-primary');
+                        }
+                        else {
+                            $("#"+id).addClass('button-flat-caution');
+                            $("#"+id).removeClass('button-flat-primary');
+                        }
                     }
                     else {
                         $("#alert-success").addClass('hide');
