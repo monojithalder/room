@@ -102,6 +102,10 @@
                             $("#"+id).addClass('button-flat-caution');
                             $("#"+id).removeClass('button-flat-primary');
                         }
+                        setTimeout(function () {
+                            $("#alert-success").addClass('hide');
+                            $("#alert-success").removeClass('show');
+                        }, 3000);
                     }
                     else {
                         $("#alert-success").addClass('hide');
@@ -109,6 +113,10 @@
 
                         $("#alert-error").addClass('show');
                         $("#alert-error").removeClass('hide');
+                        setTimeout(function () {
+                            $("#alert-error").addClass('hide');
+                            $("#alert-error").removeClass('show');
+                        }, 3000);
                     }
                     console.log(result);
                 }
