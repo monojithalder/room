@@ -118,6 +118,9 @@
                             $("#alert-error").removeClass('show');
                         }, 3000);
                     }
+                    if(result.refresh_status == 1 ){
+                        location.reload();
+                    }
                     console.log(result);
                 }
             });
