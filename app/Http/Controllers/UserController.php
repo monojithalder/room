@@ -64,9 +64,9 @@ class UserController extends Controller
 				else {
         	$items = $item_model->get()->toArray();
 					foreach ($items as $item) {
-						$item_model->where('item_code','=',$item['id'])->update(['on_off_status' => 'OFF']);
+						$item_model->where('item_code','=',$item['item_code'])->update(['on_off_status' => 'OFF']);
         	}
-        	echo '{"success" : 0,"status" : "OFF","refresh_status", 1}';
+        	echo '{"success" : 0,"status" : "OFF","refresh_status" : 1}';
 				}
         //var_dump($response);
     }
