@@ -57,6 +57,9 @@
                     <div class="panel-body" style="text-align: center">
 
                         <div class="panel ">
+                            <div id="loader" style="display: none">
+                                <img class="loader-img" src="{{ URL::asset('images/loader.gif') }}" >
+                            </div>
                             <div class="panel-heading">
                                 <h4 class="panel-title">List of Items</h4>
                             </div>
@@ -85,9 +88,11 @@
     <script>
         function task(id) {
             var url = "{{ URL::to('/task') }}" + "/" + id;
+            $("#loader").css("display","block");
             $.ajax({
                 url: url, success: function (result) {
                     result = JSON.parse(result);
+                    $("#loader").css("display","none");
                     if(result.success == 1) {
                         $("#alert-success").addClass('show');
                         $("#alert-success").removeClass('hide');

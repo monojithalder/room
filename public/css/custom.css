@@ -15,3 +15,13 @@ nav.navbar a {
     min-height: 27px;
     margin-left: 22px;
 }
+
+#loader {
+    position: absolute;
+    width: 100%;
+    
+}
+.loader-img {
+    position: relative;
+    top: -27px;
+}
