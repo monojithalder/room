@@ -24,4 +24,5 @@ nav.navbar a {
 .loader-img {
     position: relative;
     top: -27px;
+    left: 0px;
 }
