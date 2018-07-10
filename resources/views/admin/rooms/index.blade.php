@@ -15,6 +15,7 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
+                <th>Ip Address</th>
                 <th>Floor ID</th>
                 <th>Status</th>
                 <th>Edit</th>
@@ -26,6 +27,7 @@
                 <tr>
                     <td>{{ $room->id }}</td>
                     <td>{{ $room->name }}</td>
+                    <td>{{ $room->ip_address }}</td>
                     <td>{{ $room->floor_id }}</td>
                     <td>{{ $room->status }}</td>
                     <td>

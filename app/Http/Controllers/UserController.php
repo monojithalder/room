@@ -32,13 +32,16 @@ class UserController extends Controller
         return view('rooms.index')->with('room',$room)->with('items',$items);
     }
 
-    public function task($id){
+    public function task(Request $request){
+				$item_model = new Item();
+				$id = $request->id;
         $curl = curl_init();
         $test = array("success"=>TRUE);
-        $post_fields = array('pinNo' => $id);
-        $url = env('PYTHON_SERVER_URL', '');
+        /*$post_fields = array('item_no' => $request->id);*/
+        $post_fields = array();
+        $url = "http://".$request->ip_address.'/processRequest?item_no='.$id;
+        $url = "http://".$request->ip_address.'/processRequest?item_no='.$id;
         $port = env('PYTHON_SERVER_PORT','');
-        curl_setopt($curl, CURLOPT_PORT, $port);
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_POST, 1); // Do a regular HTTP POST
         curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type:multipart/form-data"));
@@ -46,6 +49,8 @@ class UserController extends Controller
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
         $test = json_encode($test);
         $response = curl_exec($curl);
+				//$response = '{"status" : "1"}';
+				$response = str_replace("'",'"',$response);
         $response = json_decode($response, 1);
 				$item_model = new Item();
         if($response['success'] == 1) {

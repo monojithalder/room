@@ -137,6 +137,7 @@ class AdminController extends Controller
 		if($request->id == null){
 			$room = new Room();
 			$room->name = $request->input('name');
+			$room->ip_address = $request->ip_address;
 			$room->floor_id = $request->input('floor_id');
 			$room->status = $request->input('status');
 			$room->save();
@@ -148,6 +149,7 @@ class AdminController extends Controller
 				return redirect($redirect)->with('error','Room Does Not Exist');
 			}
 			$room->name = $request->input('name');
+			$room->ip_address = $request->ip_address;
 			$room->floor_id = $request->input('floor_id');
 			$room->status = $request->input('status');
 			$room->save();

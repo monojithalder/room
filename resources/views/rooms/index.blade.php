@@ -53,6 +53,8 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">Room - {{ $room->name }}</h3>
                     </div>
+                    <input type="hidden" id="ip_address" name="ip_address" value="{{ $room->ip_address }}" >
+
 
                     <div class="panel-body" style="text-align: center">
 
@@ -87,7 +89,8 @@
 @section('custom-script')
     <script>
         function task(id) {
-            var url = "{{ URL::to('/task') }}" + "/" + id;
+            var ip_address = $('#ip_address').val();
+            var url = "{{ URL::to('/task') }}" + "/" + id + "/" + ip_address;
             $("#loader").css("display","block");
             $.ajax({
                 url: url, success: function (result) {

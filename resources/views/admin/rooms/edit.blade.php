@@ -26,6 +26,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label for="name" class="col-sm-2 control-label">Ip Address</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="ip_address" name="ip_address"
+                                           placeholder="Ip Address" value="{{ $room->ip_address }}">
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="status" class="col-sm-2 control-label">Floor</label>
                                 <div class="col-sm-10">
                                     <select id="floor_id" class="form-control" name="floor_id" required>
