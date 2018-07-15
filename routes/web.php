@@ -51,4 +51,16 @@ Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
 	Route::get('/item/edit/{id}', ['uses' =>'AdminController@itemEditForm']);
 	Route::post('/item/edit/{id}', ['uses' =>'AdminController@itemUpdate']);
 	Route::get('/item/delete/{id}', ['uses' =>'AdminController@itemDelete']);
+
+	Route::get('create-component-list','ComponentController@showCreateComponentListForm');
+	Route::post('create-component-list','ComponentController@createComponentList');
+	Route::get('edit-component-list/{id}','ComponentController@editComponentList');
+	Route::get('list-component','ComponentController@showComponentList');
+
+	Route::get('add-component/{list_id}','ComponentController@showCreateBuyComponentForm');
+	Route::post('add-component','ComponentController@createBuyComponent');
+	Route::get('view-component/{list_id}','ComponentController@viewBuyComponent');
+	Route::get('edit-buy-component/{id}','ComponentController@editBuyComponent');
+	Route::get('delete-buy-component/{id}','ComponentController@deleteBuyComponent');
+
 });
