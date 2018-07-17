@@ -38,6 +38,7 @@ class ResistorController extends Controller
 				$data = array();
 				$data['value'] = $request->value;
 				$data['stock'] = $request->stock;
+				$data['packet_no'] = $request->packet_no;
 				$color_code = array();
 				$color_code [] = $request->color_code_1;
 				$color_code [] = $request->color_code_2;
@@ -52,6 +53,7 @@ class ResistorController extends Controller
 				$data = array();
 				$data['value'] = $request->value;
 				$data['stock'] = $request->stock;
+				$data['packet_no'] = $request->packet_no;
 				$color_code = array();
 				$color_code [] = $request->color_code_1;
 				$color_code [] = $request->color_code_2;

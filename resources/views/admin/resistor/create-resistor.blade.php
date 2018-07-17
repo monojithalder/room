@@ -46,6 +46,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label for="name" class="col-sm-2 control-label">Packet No</label>
+                                <div class="col-sm-10">
+                                    <input value="@if(isset($data['packet_no'])) {{ $data['packet_no'] }} @endif" type="text" class="form-control" id="packet_no" name="packet_no"
+                                           placeholder="Quantity" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="name" class="col-sm-2 control-label">Color 1</label>
                                 <div class="col-sm-10">
                                     <select class="form-control" name="color_code_1">

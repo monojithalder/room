@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @php($title = config('app.name'))
-@section('page-title','Buy Component List - '.$title)
+@section('page-title','Resistor List - '.$title)
 @section('custom-include')
     <link rel="stylesheet" href="{{asset('css/custom_css/alertmessage.css')}}">
     <style>
@@ -35,6 +35,7 @@
                 <th>ID</th>
                 <th>Value</th>
                 <th>Stock</th>
+                <th>Packet No</th>
                 <th>Color Code</th>
                 <th>Action</th>
             </tr>
@@ -45,6 +46,7 @@
                     <td>{{ $value['id'] }}</td>
                     <td>{{ $value['value_str'] }}</td>
                     <td>{{ $value['stock'] }}</td>
+                    <td>{{ $value['packet_no'] }}</td>
                     <td><div>@foreach($value['color_code_array'] as $code_value) <div style="background-color: {{ $code_value }};float:left;height: 20px;width: 30px;"></div> @endforeach</div></td>
                     <td>
                         <p>

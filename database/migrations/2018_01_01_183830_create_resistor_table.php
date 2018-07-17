@@ -18,6 +18,7 @@ class CreateResistorTable extends Migration
             $table->integer('value');
             $table->integer('stock');
             $table->text('color_code');
+            $table->string('packet_no');
             $table->timestamps();
         });
     }
