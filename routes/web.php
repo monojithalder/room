@@ -63,4 +63,13 @@ Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
 	Route::get('edit-buy-component/{id}','ComponentController@editBuyComponent');
 	Route::get('delete-buy-component/{id}','ComponentController@deleteBuyComponent');
 
+
+	Route::get('resistor-list','ResistorController@showResistorList');
+	Route::get('create-resistor','ResistorController@showCreateResistorForm');
+	Route::post('create-resistor','ResistorController@createResistor');
+	Route::get('edit-resistor/{id}','ResistorController@editResistor');
+	Route::get('delete-resistor/{id}','ResistorController@deleteResistor');
+
+	Route::post('show-resistors','ResistorController@showResistors');
+
 });

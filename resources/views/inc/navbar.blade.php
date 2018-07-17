@@ -26,6 +26,7 @@
                     @if(Auth::user()->role == 'ADMIN')
                         <li><a href="{{ url('/floors') }}">User Section</a></li>
                         <li><a href="{{ url('/admin/list-component') }}">Component</a></li>
+                        <li><a href="{{ url('/admin/resistor-list') }}">Resistors</a></li>
                     @endif
 
                 @endguest
