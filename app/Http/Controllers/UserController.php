@@ -75,4 +75,35 @@ class UserController extends Controller
 				}
         //var_dump($response);
     }
+
+		public function taskStatus(Request $request) {
+			$item_model = new Item();
+			$i = 0;
+			$items = $item_model->where('room_id','=',$request->id)->get()->toArray();
+			$return_array = array();
+			foreach ($items as $item) {
+				$curl = curl_init();
+				$test = array("success" => TRUE);
+				/*$post_fields = array('item_no' => $request->id);*/
+				$post_fields = array();
+				$url = "http://" . $request->ip_address . '/status?item_no=' . $request->id;
+				$port = env('PYTHON_SERVER_PORT', '');
+				curl_setopt($curl, CURLOPT_URL, $url);
+				curl_setopt($curl, CURLOPT_POST, 1); // Do a regular HTTP POST
+				curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type:multipart/form-data"));
+				curl_setopt($curl, CURLOPT_POSTFIELDS, $post_fields); // Set POST data
+				curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+				//$test = json_encode($test);
+				$response = curl_exec($curl);
+				//$response = '{"status" : 0}';
+				$response = str_replace("'", '"', $response);
+				$response = json_decode($response, 1);
+				$item_data['id'] = $item['item_code'];
+				$item_data['status'] = $response['status'];
+				$return_array[$i] = $item_data;
+				$i++;
+			}
+			return json_encode($return_array);
+    }
+
 }

@@ -20,6 +20,7 @@ Route::get('/dashboard', ['uses' =>'DashboardController@index']);
 Route::get('/floors', ['uses' =>'UserController@index']);
 Route::get('/room/{id}/{ip_address}', ['uses' =>'UserController@room']);
 Route::get('/task/{id}/{ip_address}', ['uses' =>'UserController@task']);
+Route::get('/item-status/{id}/{ip_address}',['uses' =>'UserController@taskStatus']);
 
 Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
 
