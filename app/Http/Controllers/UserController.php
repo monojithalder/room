@@ -86,7 +86,7 @@ class UserController extends Controller
 				$test = array("success" => TRUE);
 				/*$post_fields = array('item_no' => $request->id);*/
 				$post_fields = array();
-				$url = "http://" . $request->ip_address . '/status?item_no=' . $request->id;
+				$url = "http://" . $request->ip_address . '/status?item_no=' . $item['item_code'];
 				$port = env('PYTHON_SERVER_PORT', '');
 				curl_setopt($curl, CURLOPT_URL, $url);
 				curl_setopt($curl, CURLOPT_POST, 1); // Do a regular HTTP POST
@@ -99,8 +99,15 @@ class UserController extends Controller
 				$response = str_replace("'", '"', $response);
 				$response = json_decode($response, 1);
 				$item_data['id'] = $item['item_code'];
-				$item_data['status'] = $response['status'];
+				$item_data['status'] = $response['pin_status'];
 				$return_array[$i] = $item_data;
+				$item_status = "OFF";
+				if($response['pin_status'] == 1) {
+					$item_status = "ON";
+				}
+				$item_model->where('id','=',$item->id)->update([
+					"on_off_status" => $item_status
+				]);
 				$i++;
 			}
 			return json_encode($return_array);
