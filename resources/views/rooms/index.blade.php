@@ -159,5 +159,31 @@
                 }
             });
         }, 20000);
+
+        function status_update() {
+            var ip_address = $('#ip_address').val();
+            var id = $("#room_id").val();
+            var url = "{{ URL::to('/item-status') }}" + "/" + id + "/" + ip_address;
+            $("#loader").css("display","block");
+            $.ajax({
+                url: url, success: function (result) {
+                    result = JSON.parse(result);
+                    var i = 0;
+                    for(i=0;i<result.length;i++) {
+                        if(result[i]['status'] == 1) {
+                            $("#"+result[i]['id']).removeClass('button-flat-caution');
+                            $("#"+result[i]['id']).addClass('button-flat-primary');
+                        }
+                        else {
+                            $("#"+result[i]['id']).addClass('button-flat-caution');
+                            $("#"+result[i]['id']).removeClass('button-flat-primary');
+                        }
+                    }
+                    $("#loader").css("display","none");
+                    console.log(result);
+                }
+            });
+        }
+        status_update();
     </script>
 @endsection

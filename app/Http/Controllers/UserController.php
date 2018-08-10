@@ -105,7 +105,7 @@ class UserController extends Controller
 				if($response['pin_status'] == 1) {
 					$item_status = "ON";
 				}
-				$item_model->where('id','=',$item->id)->update([
+				$item_model->where('id','=',$item['id'])->update([
 					"on_off_status" => $item_status
 				]);
 				$i++;
