@@ -51,4 +51,8 @@ Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
 	Route::get('/item/edit/{id}', ['uses' =>'AdminController@itemEditForm']);
 	Route::post('/item/edit/{id}', ['uses' =>'AdminController@itemUpdate']);
 	Route::get('/item/delete/{id}', ['uses' =>'AdminController@itemDelete']);
+
+    Route::get('/pump-ip/insert', 'AdminController@showPumpIpForm');
+    Route::get('/water-level', 'AdminController@viewWaterLevel');
+    Route::post('/pump-ip/insert', 'AdminController@insertPumpIp');
 });
