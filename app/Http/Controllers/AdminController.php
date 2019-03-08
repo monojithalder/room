@@ -6,6 +6,7 @@ use App\Floor;
 use App\Room;
 use App\User;
 use App\Item;
+use App\Pump;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -228,6 +229,43 @@ class AdminController extends Controller
 		}
 		$item->delete();
 		return redirect($redirect)->with('success','Item Deleted Successfully.');
+	}
+
+    public function showPumpIpForm()
+    {
+        $pump = new Pump();
+        $pump_data = $pump->get()->toArray();
+        $data = array();
+        if(!empty($pump_data)) {
+            $data['ip'] = $pump_data[0]['ip'];
+        }
+        else {
+            $pump->create([
+                'ip' => '0.0.0.0',
+                'status' => 1
+
+            ]);
+            $data['ip'] = '0.0.0.0';
+        }
+        return view('admin.pump.insert',compact('data'));
+	}
+
+    public function insertPumpIp(Request $request)
+    {
+        $ip =  $request->ip;
+        $pump = new Pump();
+        $pump->find(1)->update([
+            'ip' => $ip
+        ]);
+        return redirect('/admin/pump-ip/insert')->with('success','Pump Ip Added Successfully.');
+	}
+
+    public function viewWaterLevel()
+    {
+        $pump = new Pump();
+        $pump_data = $pump->where('id','=',1)->get()->toArray();
+        $data['ip'] = $pump_data[0]['ip'];
+        return view('admin.pump.show',compact('data'));
 	}
 
 }

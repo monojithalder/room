@@ -110,6 +110,26 @@
                                 </div>
                             </div>
                         </div>
+                            <div class="panel panel-lightgreen">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">PUMP</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-1 col-sm-6 col-xs-6 text-center">
+                                            <button class="button button-rounded button-flat-action sink" onclick="location.href='{{ url('/admin/pump-ip/insert') }}'">
+                                                Add / Edit Pump Ip
+                                            </button>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
+                                            <button class="button button-rounded button-flat-action sink" onclick="location.href='{{ url('/admin/water-level') }}'">
+
+                                                View Pump/Water level
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                     </div>
                 </div>
