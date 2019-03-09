@@ -18,8 +18,9 @@ Route::get('/', 'DashboardController@index');
 Route::get('/dashboard', ['uses' =>'DashboardController@index']);
 
 Route::get('/floors', ['uses' =>'UserController@index']);
-Route::get('/room/{id}', ['uses' =>'UserController@room']);
-Route::get('/task/{id}', ['uses' =>'UserController@task']);
+Route::get('/room/{id}/{ip_address}', ['uses' =>'UserController@room']);
+Route::get('/task/{id}/{ip_address}', ['uses' =>'UserController@task']);
+Route::get('/item-status/{id}/{ip_address}',['uses' =>'UserController@taskStatus']);
 
 Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
 
@@ -71,8 +72,9 @@ Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
 	Route::get('delete-resistor/{id}','ResistorController@deleteResistor');
 
 	Route::post('show-resistors','ResistorController@showResistors');
-	
-	Route::get('/pump-ip/insert', 'AdminController@showPumpIpForm');
-        Route::get('/water-level', 'AdminController@viewWaterLevel');
-        Route::post('/pump-ip/insert', 'AdminController@insertPumpIp');
+
+    Route::get('/pump-ip/insert', 'AdminController@showPumpIpForm');
+    Route::get('/water-level', 'AdminController@viewWaterLevel');
+    Route::post('/pump-ip/insert', 'AdminController@insertPumpIp');
+
 });
