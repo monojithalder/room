@@ -49,11 +49,11 @@
                     var result_full = 100;
                     var result_percentage = 0;
                     result_percentage = (100 * result.water_level) / 100;
-
+                    result_percentage = 100 - result_percentage;
                     var css_full = 152;
                     var css_water_lavel = (152 * result_percentage) / 100;
-                    if(css_water_lavel > 152) {
-                        css_water_lavel = 152;
+                    if(css_water_lavel < 0) {
+                        css_water_lavel = 0;
                     }
                     $(".fill").height(css_water_lavel)
                     console.log(result);
