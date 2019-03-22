@@ -15,5 +15,5 @@ class Resistor extends Model
 {
 		protected $table = 'resistor';
     public $timestamps = TRUE;
-    protected $fillable = ['id','value','color_code','stock'];
+    protected $fillable = ['id','value','color_code','stock','packet_no'];
 }
