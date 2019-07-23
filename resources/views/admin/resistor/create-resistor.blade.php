@@ -57,6 +57,7 @@
                                 <div class="col-sm-10">
                                     <select class="form-control" name="color_code_1">
                                         <option value="#FF0000" @if(isset($data['color_code_1']) && $data['color_code_1'] == '#FF0000') selected="selected" @endif>Red</option>
+                                        <option value="#000000" @if(isset($data['color_code_1']) && $data['color_code_1'] == '#000000') selected="selected" @endif>Black</option>
                                         <option value="#A52A2A" @if(isset($data['color_code_1']) && $data['color_code_1'] == '#A52A2A') selected="selected" @endif>Brown</option>
                                         <option value="#FFA500" @if(isset($data['color_code_1']) && $data['color_code_1'] == '#FFA500') selected="selected" @endif>Orange</option>
                                         <option value="#FFFF00" @if(isset($data['color_code_1']) && $data['color_code_1'] == '#FFFF00') selected="selected" @endif>Yellow</option>
@@ -75,6 +76,7 @@
                                 <div class="col-sm-10">
                                     <select class="form-control" name="color_code_2">
                                         <option value="#FF0000" @if(isset($data['color_code_2']) && $data['color_code_2'] == '#FF0000') selected="selected" @endif>Red</option>
+                                        <option value="#000000" @if(isset($data['color_code_1']) && $data['color_code_1'] == '#000000') selected="selected" @endif>Black</option>
                                         <option value="#A52A2A" @if(isset($data['color_code_2']) && $data['color_code_2'] == '#A52A2A') selected="selected" @endif>Brown</option>
                                         <option value="#FFA500" @if(isset($data['color_code_2']) && $data['color_code_2'] == '#FFA500') selected="selected" @endif>Orange</option>
                                         <option value="#FFFF00" @if(isset($data['color_code_2']) && $data['color_code_2'] == '#FFFF00') selected="selected" @endif>Yellow</option>
@@ -93,6 +95,7 @@
                                 <div class="col-sm-10">
                                     <select class="form-control" name="color_code_3">
                                         <option value="#FF0000" @if(isset($data['color_code_3']) && $data['color_code_3'] == '#FF0000') selected="selected" @endif>Red</option>
+                                        <option value="#000000" @if(isset($data['color_code_1']) && $data['color_code_1'] == '#000000') selected="selected" @endif>Black</option>
                                         <option value="#A52A2A" @if(isset($data['color_code_3']) && $data['color_code_3'] == '#A52A2A') selected="selected" @endif>Brown</option>
                                         <option value="#FFA500" @if(isset($data['color_code_3']) && $data['color_code_3'] == '#FFA500') selected="selected" @endif>Orange</option>
                                         <option value="#FFFF00" @if(isset($data['color_code_3']) && $data['color_code_3'] == '#FFFF00') selected="selected" @endif>Yellow</option>
@@ -111,6 +114,7 @@
                                 <div class="col-sm-10">
                                     <select class="form-control" name="color_code_4">
                                         <option value="#FF0000" @if(isset($data['color_code_4']) && $data['color_code_4'] == '#FF0000') selected="selected" @endif>Red</option>
+                                        <option value="#000000" @if(isset($data['color_code_1']) && $data['color_code_1'] == '#000000') selected="selected" @endif>Black</option>
                                         <option value="#A52A2A" @if(isset($data['color_code_4']) && $data['color_code_4'] == '#A52A2A') selected="selected" @endif>Brown</option>
                                         <option value="#FFA500" @if(isset($data['color_code_4']) && $data['color_code_4'] == '#FFA500') selected="selected" @endif>Orange</option>
                                         <option value="#FFFF00" @if(isset($data['color_code_4']) && $data['color_code_4'] == '#FFFF00') selected="selected" @endif>Yellow</option>
