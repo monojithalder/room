@@ -22,17 +22,21 @@
         position: absolute;
         bottom: 37px;
     }
+    .percentage {
+        margin-left: 66px;
+        color: #fff;
+    }
 </style>
 @section('content')
     <div class="container">
+        <input type="button" class="btn btn-primary" value="Refreash" onclick="refreash();">
         <div>
             <p>Reserver Water Lavel: <span id="reserver-status">...</span></p>
             <p>Pump: <span id="pump-on-status">...</span></p>
         </div>
         <div id="watertank">
             <div class="fill">
-
-
+                <span class="percentage"></span>
             </div>
         </div>
     </div>
@@ -56,6 +60,7 @@
                         css_water_lavel = 0;
                     }
                     $(".fill").height(css_water_lavel)
+                    $(".fill span").Html(result_percentage+"%");
                     console.log(result);
                 }
             });
@@ -87,17 +92,26 @@
                     result = result.replace("'", '"');
                     result = JSON.parse(result);
                     if(result.reserver_status == 0) {
-                        $("#reserver-status").html("OK");
+                        $("#reserver-status").html("OK (DEBUG " + result.reserver_status + ")");
                     }
                     else {
-                        $("#reserver-status").html("LOW");
+                        $("#reserver-status").html("LOW (DEBUG " + result.reserver_status + ")");
                     }
                 }
             });
         }
-        setInterval(fetch_water_level,1000);
-        setInterval(fetch_pump_status,1000);
-        setInterval(fetch_reserver_status,1000);
+        //setInterval(fetch_water_level,1000);
+        //setInterval(fetch_pump_status,1000);
+        //setInterval(fetch_reserver_status,1000);
+        fetch_water_level();
+        fetch_pump_status();
+        fetch_reserver_status();
+
+        function refreash() {
+            fetch_water_level();
+            fetch_pump_status();
+            fetch_reserver_status();
+        }
     </script>
 @endsection
 
