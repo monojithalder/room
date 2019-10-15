@@ -60,7 +60,7 @@
                         css_water_lavel = 0;
                     }
                     $(".fill").height(css_water_lavel)
-                    $(".fill span").html(result_percentage+"%");
+                    $(".fill span").html(result_percentage+"% (" + result.water_level + ")");
                     console.log(result);
                 }
             });
