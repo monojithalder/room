@@ -76,5 +76,7 @@ Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
     Route::get('/pump-ip/insert', 'AdminController@showPumpIpForm');
     Route::get('/water-level', 'AdminController@viewWaterLevel');
     Route::post('/pump-ip/insert', 'AdminController@insertPumpIp');
+    Route::get('/pump/settings', 'AdminController@pumpSettingsForm');
+    Route::post('/pump/settings', 'AdminController@pumpSettings');
 
 });

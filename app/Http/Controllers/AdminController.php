@@ -8,6 +8,7 @@ use App\User;
 use App\Item;
 use App\Pump;
 use Illuminate\Http\Request;
+use App\PumpSettings;
 
 class AdminController extends Controller
 {
@@ -266,6 +267,64 @@ class AdminController extends Controller
         $pump_data = $pump->where('id','=',1)->get()->toArray();
         $data['ip'] = $pump_data[0]['ip'];
         return view('admin.pump.show',compact('data'));
+	}
+
+    public function pumpSettingsForm()
+    {
+        $pump_settings = new PumpSettings();
+        $pump_data = $pump_settings->get()->toArray();
+        $data = array();
+        if(!empty($pump_data)) {
+            $data['tank_high_value'] = $pump_data[0]['tank_high_value'];
+            $data['tank_low_value'] = $pump_data[0]['tank_low_value'];
+        }
+        else {
+            $pump_settings->create([
+                'tank_high_value' => 0,
+                'tank_low_value' => 0
+
+            ]);
+            $data['tank_low_value']  = 0;
+            $data['tank_high_value'] = 0;
+        }
+        return view('admin.pump.settings',compact('data'));
+	}
+
+    public function pumpSettings(Request $request)
+    {
+        $tank_high_value =  $request->tank_high_value;
+        $tank_low_value =  $request->tank_low_value;
+        $pump_settings = new PumpSettings();
+        $pump = new Pump();
+        $pump_data = $pump->where('id','=',1)->get()->toArray();
+        $ip = $pump_data[0]['ip'];
+        $curl = curl_init();
+        // Set some options - we are passing in a useragent too here
+        curl_setopt_array($curl, [
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => 'http://'.$ip.'/setTankHighLevel?level='.$tank_high_value,
+            CURLOPT_USERAGENT => 'Pump Settings'
+        ]);
+        // Send the request & save response to $resp
+        $resp = curl_exec($curl);
+        // Close request to clear up some resources
+        curl_close($curl);
+        $curl = curl_init();
+        // Set some options - we are passing in a useragent too here
+        curl_setopt_array($curl, [
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => 'http://'.$ip.'/setTankLowLevel?level='.$tank_low_value,
+            CURLOPT_USERAGENT => 'Pump Settings'
+        ]);
+        // Send the request & save response to $resp
+        $resp = curl_exec($curl);
+        // Close request to clear up some resources
+        curl_close($curl);
+        $pump_settings->find(1)->update([
+            'tank_high_value' => $tank_high_value,
+            'tank_low_value' => $tank_low_value
+        ]);
+        return redirect('/admin/pump/settings')->with('success','Pump Ip Added Successfully.');
 	}
 
 }
