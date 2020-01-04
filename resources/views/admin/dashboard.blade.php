@@ -133,6 +133,12 @@
                                                 Settings
                                             </button>
                                         </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center" style="margin-top: 10px">
+                                            <button class="button button-rounded button-flat-action sink" onclick="location.href='{{ url('/admin/pump/debug') }}'">
+
+                                                Debug
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

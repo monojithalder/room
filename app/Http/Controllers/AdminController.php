@@ -364,4 +364,21 @@ class AdminController extends Controller
         }
         return '{"master_control" : '.!$master_control.'}';
 	}
+
+    public function pumpDebug()
+    {
+        $pump = new Pump();
+        $pump_data = $pump->where('id','=',1)->get()->toArray();
+        $ip = $pump_data[0]['ip'];
+
+        $cURLConnection = curl_init();
+
+        curl_setopt($cURLConnection, CURLOPT_URL, 'http://'.$ip.'/debug');
+        curl_setopt($cURLConnection, CURLOPT_RETURNTRANSFER, true);
+
+        $debug_data = curl_exec($cURLConnection);
+        curl_close($cURLConnection);
+        $data = json_decode($debug_data,1);
+        return view('admin.pump.debug',compact('data'));
+	}
 }
