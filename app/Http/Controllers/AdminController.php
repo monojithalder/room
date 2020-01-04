@@ -266,6 +266,18 @@ class AdminController extends Controller
         $pump = new Pump();
         $pump_data = $pump->where('id','=',1)->get()->toArray();
         $data['ip'] = $pump_data[0]['ip'];
+        $pump_settings = new PumpSettings();
+        $pump_settings_data = $pump_settings->get()->toArray();
+        $master_control = 0;
+        if(empty($pump_settings_data[0]['master_control'])) {
+            $pump_settings->find(1)->update([
+                'master_control' => 0,
+            ]);
+        }
+        else {
+            $master_control = $pump_settings_data[0]['master_control'];
+        }
+        $data['master_control'] = $master_control;
         return view('admin.pump.show',compact('data'));
 	}
 
@@ -327,4 +339,29 @@ class AdminController extends Controller
         return redirect('/admin/pump/settings')->with('success','Pump Ip Added Successfully.');
 	}
 
+    public function pumpMasterControl()
+    {
+        $pump_settings = new PumpSettings();
+        $pump_settings_data = $pump_settings->get()->toArray();
+        $master_control = $pump_settings_data[0]['master_control'];
+        $pump = new Pump();
+        $pump_data = $pump->where('id','=',1)->get()->toArray();
+        $ip = $pump_data[0]['ip'];
+        $curl = curl_init();
+        // Set some options - we are passing in a useragent too here
+        curl_setopt_array($curl, [
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => 'http://'.$ip.'/masterControl?item_no='.!$master_control,
+            CURLOPT_USERAGENT => 'Master Control'
+        ]);
+        // Send the request & save response to $resp
+        $resp = curl_exec($curl);
+        $resp = json_decode($resp,1);
+        if($resp['success'] == 1) {
+            $pump_settings->find(1)->update([
+                'master_control' => !$master_control
+            ]);
+        }
+        return '{"master_control" : '.!$master_control.'}';
+	}
 }

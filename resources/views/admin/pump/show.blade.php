@@ -27,9 +27,11 @@
         color: #fff;
     }
 </style>
+
 @section('content')
     <div class="container">
-        <input type="button" class="btn btn-primary" value="Refreash" onclick="refreash();">
+        <input type="button" class="btn btn-primary" value="Refresh" onclick="refresh();">
+        <input type="button" class="btn @if($data['master_control'] == 0) btn-primary @else btn-warning @endif" value="@if($data['master_control'] == 0) ON @else OFF @endif" onclick="master_control();">
         <div>
             <p>Reserver Water Lavel: <span id="reserver-status">...</span></p>
             <p>Pump: <span id="pump-on-status">...</span></p>
@@ -107,10 +109,16 @@
         fetch_pump_status();
         fetch_reserver_status();
 
-        function refreash() {
+        function refresh() {
             fetch_water_level();
             fetch_pump_status();
             fetch_reserver_status();
+        }
+        
+        function master_control() {
+            $.post( "//pump/master-control", function( data ) {
+
+            });
         }
     </script>
 @endsection
