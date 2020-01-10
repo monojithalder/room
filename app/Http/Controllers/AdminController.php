@@ -289,6 +289,8 @@ class AdminController extends Controller
         if(!empty($pump_data)) {
             $data['tank_high_value'] = $pump_data[0]['tank_high_value'];
             $data['tank_low_value'] = $pump_data[0]['tank_low_value'];
+            $data['pump_mode'] = $pump_data[0]['pump_mode'];
+            $data['select_pump'] = $pump_data[0]['select_pump'];
         }
         else {
             $pump_settings->create([
@@ -306,6 +308,8 @@ class AdminController extends Controller
     {
         $tank_high_value =  $request->tank_high_value;
         $tank_low_value =  $request->tank_low_value;
+        $pump_mode =  $request->pump_mode;
+        $select_pump =  $request->select_pump;
         $pump_settings = new PumpSettings();
         $pump = new Pump();
         $pump_data = $pump->where('id','=',1)->get()->toArray();
@@ -332,9 +336,22 @@ class AdminController extends Controller
         $resp = curl_exec($curl);
         // Close request to clear up some resources
         curl_close($curl);
+        $curl = curl_init();
+        // Set some options - we are passing in a useragent too here
+        curl_setopt_array($curl, [
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => 'http://'.$ip.'/set-pump-controll-mode?pump_mode='.$pump_mode.'&select_pump='.$select_pump,
+            CURLOPT_USERAGENT => 'Pump Settings'
+        ]);
+        // Send the request & save response to $resp
+        $resp = curl_exec($curl);
+        // Close request to clear up some resources
+        curl_close($curl);
         $pump_settings->find(1)->update([
             'tank_high_value' => $tank_high_value,
-            'tank_low_value' => $tank_low_value
+            'tank_low_value' => $tank_low_value,
+            'pump_mode' => $pump_mode,
+            'select_pump' => $select_pump
         ]);
         return redirect('/admin/pump/settings')->with('success','Pump Ip Added Successfully.');
 	}
