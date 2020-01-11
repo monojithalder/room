@@ -36,6 +36,7 @@
                 <th scope="col">Condition</th>
                 <th scope="col">Counter</th>
                 <th scope="col">Else Part Distance</th>
+                <th scope="col">Check Water Counter</th>
                 <th scope="col">master_status</th>
                 <th scope="col">Pump1 Pin Status</th>
                 <th scope="col">Pump On Condition</th>
@@ -54,6 +55,7 @@
                 <td>{{ $data['Condition'] }}</td>
                 <td>{{ $data['Counter'] }}</td>
                 <td>{{ $data['else_part_distance'] }}</td>
+                <td>{{ $data['check_water_counter'] }}</td>
                 <td>{{ $data['master_status'] }}</td>
                 <td>{{ $data['Pump1 Pin Status'] }}</td>
                 <td>{{ $data['Pump On Condition'] }}</td>
