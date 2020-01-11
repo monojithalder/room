@@ -31,7 +31,7 @@
 @section('content')
     <div class="container">
         <input type="button" class="btn btn-primary" value="Refresh" onclick="refresh();">
-        <input type="button" class="btn @if($data['master_control'] == 0) btn-primary @else btn-warning @endif" value="@if($data['master_control'] == 0) ON @else OFF @endif" onclick="master_control();">
+        <input type="button" id="master_controll" class="btn @if($data['master_control'] == 0) btn-primary @else btn-warning @endif" value="@if($data['master_control'] == 0) ON @else OFF @endif" onclick="master_control();">
         <div>
             <p>Reserver Water Lavel: <span id="reserver-status">...</span></p>
             <p>Pump: <span id="pump-on-status">...</span></p>
@@ -116,8 +116,32 @@
         }
         
         function master_control() {
-            $.post( "/admin/pump/master-control", function( data ) {
+            /*$.post( "pump/master-control", function( data ) {
 
+            });*/
+            $.ajax({
+                url : "pump/master-control",
+                type: "POST",
+                data : null,
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                success: function(data, textStatus, jqXHR)
+                {
+                    var a =0;
+                    data = JSON.parse(data);
+                    if(data.master_control == 1) {
+                        $("#master_controll").attr('value', 'OFF');
+                    }
+                    else {
+                        $("#master_controll").attr('value', 'ON');
+                    }
+                    //data - response from server
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+
+                }
             });
         }
     </script>
