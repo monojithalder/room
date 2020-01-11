@@ -116,8 +116,8 @@
         }
         
         function master_control() {
-            $.post( "/pump/master-control", function( data ) {
-                
+            $.post( "/admin/pump/master-control", function( data ) {
+
             });
         }
     </script>
