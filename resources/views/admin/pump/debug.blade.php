@@ -44,6 +44,8 @@
                 <th scope="col">Select Pump</th>
                 <th scope="col">Last Pump On</th>
                 <th scope="col">Pump Start Height</th>
+                <th scope="col">Low Level</th>
+                <th scope="col">High Level</th>
             </tr>
             </thead>
             <tbody>
@@ -59,6 +61,8 @@
                 <td>{{ $data['Select Pump'] }}</td>
                 <td>{{ $data['Last Pump On'] }}</td>
                 <td>{{ $data['Pump Start Height'] }}</td>
+                <td>{{ $data['Low Level'] }}</td>
+                <td>{{ $data['High Level'] }}</td>
             </tr>
             </tbody>
         </table>
