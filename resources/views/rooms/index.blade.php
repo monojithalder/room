@@ -36,6 +36,13 @@
         .show {
             display: block;
         }
+        .refresh-icon {
+            width: 20px;
+            cursor: pointer;
+        }
+        .panel-title {
+            margin-top: 2px !important;
+        }
     </style>
 @endsection
 @section('content')
@@ -52,7 +59,11 @@
 
                     <div class="panel-heading">
                         <input type="hidden" name="room_id" id="room_id" value="{{ $room->id }}">
-                        <h3 class="panel-title">Room - {{ $room->name }}</h3>
+                        <div class="row">
+                            <div class="col-md-8"><h3 class="panel-title">Room - {{ $room->name }}</h3></div>
+                            <div class="col-md-3"></div>
+                            <div class="com-md-1"><img src="{{ URL::asset('images/refresh_iocn.svg') }}" class="refresh-icon" onclick="status_update();"></div>
+                        </div>
                     </div>
                     <input type="hidden" id="ip_address" name="ip_address" value="{{ $room->ip_address }}" >
 
@@ -71,7 +82,7 @@
                                     <ul>
                                     @foreach($items as $item)
                                         <li>
-                                            <a href="#" id="{{ $item->item_code }}" onclick="task('{{ $item->item_code }}')" class="button button-rounded @if($item->on_off_status == 'ON')button-flat-primary @else button-flat-caution @endif">{{ $item->name }}</a>
+                                            <a href="#" id="{{ $item['id'] }}" onclick="task('{{ $item['id'] }}','{{ $item['output_pin'] }}')" class="button button-rounded @if($item['on_off_status'] == 'ON')button-flat-primary @else button-flat-caution @endif">{{ $item['name'] }}</a>
                                         </li>
 
                                     @endforeach
@@ -89,9 +100,9 @@
 @endsection
 @section('custom-script')
     <script>
-        function task(id) {
+        function task(id,pin) {
             var ip_address = $('#ip_address').val();
-            var url = "{{ URL::to('/task') }}" + "/" + id + "/" + ip_address;
+            var url = "{{ URL::to('/task') }}" + "/" + id + "/" + pin +"/" + ip_address;
             $("#loader").css("display","block");
             $.ajax({
                 url: url, success: function (result) {
@@ -135,7 +146,7 @@
             });
         }
 
-        setInterval(function(){
+        /*setInterval(function(){
             var ip_address = $('#ip_address').val();
             var id = $("#room_id").val();
             var url = "{{ URL::to('/item-status') }}" + "/" + id + "/" + ip_address;
@@ -158,7 +169,7 @@
                     console.log(result);
                 }
             });
-        }, 20000);
+        }, 20000);*/
 
         function status_update() {
             var ip_address = $('#ip_address').val();

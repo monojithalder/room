@@ -28,89 +28,114 @@ class UserController extends Controller
 
     public function room($id){
         $room = Room::find($id);
+        $room_array = $room->get()->toArray();
+        $ip = $room_array[0]['ip_address'];
         $items = Item::where('room_id', '=', $id)->get();
-        return view('rooms.index')->with('room',$room)->with('items',$items);
+        $item_array = array();
+        foreach ($items as $key => $item) {
+            $curl = curl_init();
+            $test = array("success" => TRUE);
+            /*$post_fields = array('item_no' => $request->id);*/
+            $post_fields = array();
+            $url = "http://" . $ip . '/status?item_no=' . $item['item_code'];
+            curl_setopt($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+            //$test = json_encode($test);
+            $response = curl_exec($curl);
+            //$response = '{"status" : 0}';
+            $response = str_replace("'", '"', $response);
+            $response = json_decode($response, 1);
+            $item_status = "OFF";
+            if($response['pin_status'] == 1) {
+                $item_status = "ON";
+            }
+            $item_array[$key]['id'] = $item->id;
+            $item_array[$key]['output_pin'] = $item->output_pin;
+            $item_array[$key]['name'] = $item->name;
+            $item_array[$key]['on_off_status'] = $item_status;
+        }
+        return view('rooms.index')->with('room',$room)->with('items',$item_array);
     }
 
     public function task(Request $request){
-				$item_model = new Item();
-				$id = $request->id;
+        $item_model = new Item();
+        $id = $request->id;
+        $pin = $request->pin;
         $curl = curl_init();
         $test = array("success"=>TRUE);
         /*$post_fields = array('item_no' => $request->id);*/
         $post_fields = array();
-        $url = "http://".$request->ip_address.'/processRequest?item_no='.$id;
-        $url = "http://".$request->ip_address.'/processRequest?item_no='.$id;
+        $url = "http://".$request->ip_address.'/processRequest?item_no='.$pin;
         $port = env('PYTHON_SERVER_PORT','');
         curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_POST, 1); // Do a regular HTTP POST
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type:multipart/form-data"));
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $post_fields); // Set POST data
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
         $test = json_encode($test);
         $response = curl_exec($curl);
-				//$response = '{"status" : "1"}';
-				$response = str_replace("'",'"',$response);
+        //$response = '{"status" : "1"}';
+        $response = str_replace("'",'"',$response);
         $response = json_decode($response, 1);
-				$item_model = new Item();
+        $item_model = new Item();
         if($response['success'] == 1) {
-        	$item = $item_model->where('item_code','=',$id)->get()->toArray();
-        	$on_off_status = $item[0]['on_off_status'];
-        	if($on_off_status == 'OFF') {
-        		$item_model->where('item_code','=',$id)->update(['on_off_status' => 'ON']);
-						$on_off_status = 'ON';
-					}
-					else {
-						$item_model->where('item_code','=',$id)->update(['on_off_status' => 'OFF']);
-						$on_off_status = 'OFF';
-					}
-        	echo '{"success": 1,"status" : "'.$on_off_status.'","refresh_status" : 0}';
-				}
-				else {
-        	$items = $item_model->get()->toArray();
-					foreach ($items as $item) {
-						$item_model->where('item_code','=',$item['item_code'])->update(['on_off_status' => 'OFF']);
-        	}
-        	echo '{"success" : 0,"status" : "OFF","refresh_status" : 1}';
-				}
+            $item = $item_model->where('id','=',$id)->get()->toArray();
+            $item_code = $item[0]['item_code'];
+            $curl = curl_init();
+            $url = "http://" . $request->ip_address . '/status?item_no=' . $item_code;
+            $port = env('PYTHON_SERVER_PORT', '');
+            curl_setopt($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+            //$test = json_encode($test);
+            $response = curl_exec($curl);
+            //$response = '{"status" : 0}';
+            $response = str_replace("'", '"', $response);
+            $response = json_decode($response, 1);
+            $on_off_status = "OFF";
+            if($response['pin_status'] == 1) {
+                $on_off_status = "ON";
+            }
+            echo '{"success": 1,"status" : "'.$on_off_status.'","refresh_status" : 0}';
+        }
+        else {
+            $items = $item_model->get()->toArray();
+            foreach ($items as $item) {
+                $item_model->where('item_code','=',$item['item_code'])->update(['on_off_status' => 'OFF']);
+            }
+            echo '{"success" : 0,"status" : "OFF","refresh_status" : 1}';
+        }
         //var_dump($response);
     }
 
-		public function taskStatus(Request $request) {
-			$item_model = new Item();
-			$i = 0;
-			$items = $item_model->where('room_id','=',$request->id)->get()->toArray();
-			$return_array = array();
-			foreach ($items as $item) {
-				$curl = curl_init();
-				$test = array("success" => TRUE);
-				/*$post_fields = array('item_no' => $request->id);*/
-				$post_fields = array();
-				$url = "http://" . $request->ip_address . '/status?item_no=' . $item['item_code'];
-				$port = env('PYTHON_SERVER_PORT', '');
-				curl_setopt($curl, CURLOPT_URL, $url);
-				curl_setopt($curl, CURLOPT_POST, 1); // Do a regular HTTP POST
-				curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type:multipart/form-data"));
-				curl_setopt($curl, CURLOPT_POSTFIELDS, $post_fields); // Set POST data
-				curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-				//$test = json_encode($test);
-				$response = curl_exec($curl);
-				//$response = '{"status" : 0}';
-				$response = str_replace("'", '"', $response);
-				$response = json_decode($response, 1);
-				$item_data['id'] = $item['item_code'];
-				$item_data['status'] = $response['pin_status'];
-				$return_array[$i] = $item_data;
-				$item_status = "OFF";
-				if($response['pin_status'] == 1) {
-					$item_status = "ON";
-				}
-				$item_model->where('id','=',$item['id'])->update([
-					"on_off_status" => $item_status
-				]);
-				$i++;
-			}
-			return json_encode($return_array);
+    public function taskStatus(Request $request) {
+        $item_model = new Item();
+        $i = 0;
+        $items = $item_model->where('room_id','=',$request->id)->get()->toArray();
+        $return_array = array();
+        foreach ($items as $item) {
+            $curl = curl_init();
+            $test = array("success" => TRUE);
+            /*$post_fields = array('item_no' => $request->id);*/
+            $post_fields = array();
+            $url = "http://" . $request->ip_address . '/status?item_no=' . $item['item_code'];
+            $port = env('PYTHON_SERVER_PORT', '');
+            curl_setopt($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+            //$test = json_encode($test);
+            $response = curl_exec($curl);
+            //$response = '{"status" : 0}';
+            $response = str_replace("'", '"', $response);
+            $response = json_decode($response, 1);
+            $item_data['id'] = $item['id'];
+            $item_data['status'] = $response['pin_status'];
+            $return_array[$i] = $item_data;
+            $item_status = "OFF";
+            if($response['pin_status'] == 1) {
+                $item_status = "ON";
+            }
+            $item_model->where('id','=',$item['id'])->update([
+                "on_off_status" => $item_status
+            ]);
+            $i++;
+        }
+        return json_encode($return_array);
     }
 
 }
