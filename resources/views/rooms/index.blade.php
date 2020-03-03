@@ -60,9 +60,9 @@
                     <div class="panel-heading">
                         <input type="hidden" name="room_id" id="room_id" value="{{ $room->id }}">
                         <div class="row">
-                            <div class="col-md-8"><h3 class="panel-title">Room - {{ $room->name }}</h3></div>
-                            <div class="col-md-3"></div>
-                            <div class="com-md-1"><img src="{{ URL::asset('images/refresh_iocn.svg') }}" class="refresh-icon" onclick="status_update();"></div>
+                            <div class="col-md-8 col-xs-8"><h3 class="panel-title">Room - {{ $room->name }}</h3></div>
+                            <div class="col-md-3 col-xs-3"></div>
+                            <div class="com-md-1 col-xs-1"><img src="{{ URL::asset('images/refresh_iocn.svg') }}" class="refresh-icon" onclick="status_update();"></div>
                         </div>
                     </div>
                     <input type="hidden" id="ip_address" name="ip_address" value="{{ $room->ip_address }}" >
