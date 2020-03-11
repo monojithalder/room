@@ -54,6 +54,15 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label for="name" class="col-sm-2 control-label">Item Type</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="item_type">
+                                        <option value="regulate" @if(isset($data['item_type']) && $data['item_type'] == 'regulate') selected="selected" @endif>Regulate</option>
+                                        <option value="normal" @if(isset($data['item_type']) && $data['item_type'] == 'normal') selected="selected" @endif>Normal</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="status" class="col-sm-2 control-label">Room</label>
                                 <div class="col-sm-10">
                                     <select id="status" class="form-control" name="room_id" required>

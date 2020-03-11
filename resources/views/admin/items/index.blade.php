@@ -20,6 +20,8 @@
                 <th>On/Off Status</th>
                 <th>Output Pin</th>
                 <th>Input Pin</th>
+                <th>Item Type</th>
+                <th>Regulate Value</th>
                 <th>Status</th>
                 <th>Edit</th>
                 <th>Delete</th>
@@ -35,6 +37,8 @@
                     <td>{{ $item->on_off_status }}</td>
                     <td>{{ $item->output_pin }}</td>
                     <td>{{ $item->input_pin }}</td>
+                    <td>{{ $item->item_type }}</td>
+                    <td>{{ $item->regulate_value }}</td>
                     <td>{{ $item->status }}</td>
                     <td>
                         <p>

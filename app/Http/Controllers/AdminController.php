@@ -199,6 +199,8 @@ class AdminController extends Controller
 			$item->on_off_status = $request->input('on_off_status');
 			$item->output_pin = $request->input('output_pin');
 			$item->input_pin = $request->input('input_pin');
+			$item->item_type = $request->input('item_type');
+			$item->regulate_value = 0;
 			$item->status = $request->input('status');
 			$item->save();
 			return redirect($redirect)->with('success','Item Inserted Successfully.');
@@ -214,6 +216,8 @@ class AdminController extends Controller
 			$item->on_off_status = $request->input('on_off_status');
 			$item->output_pin = $request->input('output_pin');
 			$item->input_pin = $request->input('input_pin');
+			$item->item_type = $request->input('item_type');
+			$item->regulate_value = 0;
 			$item->status = $request->input('status');
 			$item->save();
 			return redirect($redirect)->with('success','Item Updated Successfully.');

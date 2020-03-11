@@ -43,6 +43,9 @@
         .panel-title {
             margin-top: 2px !important;
         }
+        #request {
+            display: none;
+        }
     </style>
 @endsection
 @section('content')
@@ -76,14 +79,22 @@
                             </div>
                             <div class="panel-heading">
                                 <h4 class="panel-title">List of Items</h4>
+                                <div id="request">Please Refresh Again</div>
                             </div>
                             <div class="panel-body">
                                 <div class="flatbuttons">
                                     <ul>
                                     @foreach($items as $item)
-                                        <li>
-                                            <a href="#" id="{{ $item['id'] }}" onclick="task('{{ $item['id'] }}','{{ $item['output_pin'] }}')" class="button button-rounded @if($item['on_off_status'] == 'ON')button-flat-primary @else button-flat-caution @endif">{{ $item['name'] }}</a>
-                                        </li>
+                                        @if($item['item_type'] == "normal")
+                                            <li>
+                                                <a href="#" id="{{ $item['id'] }}" onclick="task('{{ $item['id'] }}','{{ $item['output_pin'] }}')" class="button button-rounded @if($item['on_off_status'] == 'ON')button-flat-primary @else button-flat-caution @endif">{{ $item['name'] }}</a>
+                                            </li>
+                                        @else
+                                             <li>
+                                                <a href="#" id="{{ $item['id'] }}" onclick="task('{{ $item['id'] }}','{{ $item['output_pin'] }}')" class="button button-rounded @if($item['on_off_status'] == 'ON')button-flat-primary @else button-flat-caution @endif">{{ $item['name'] }}</a>
+                                             </li>
+                                             <input type="range" min="1" max="100" value="1" id="range-{{ $item['id'] }}">
+                                        @endif
 
                                     @endforeach
                                     </ul>
@@ -114,6 +125,12 @@
 
                         $("#alert-error").addClass('hide');
                         $("#alert-error").removeClass('show');
+                        if(result.request == 1) {
+                            $("#request").show();
+                        }
+                        else {
+                            $("#request").hide();
+                        }
                         if(result.status == 'ON') {
                             $("#"+id).removeClass('button-flat-caution');
                             $("#"+id).addClass('button-flat-primary');
@@ -175,12 +192,16 @@
             var ip_address = $('#ip_address').val();
             var id = $("#room_id").val();
             var url = "{{ URL::to('/item-status') }}" + "/" + id + "/" + ip_address;
+            $("#request").hide();
             $("#loader").css("display","block");
             $.ajax({
                 url: url, success: function (result) {
                     result = JSON.parse(result);
                     var i = 0;
                     for(i=0;i<result.length;i++) {
+                        if(result[i]['request'] == 1) {
+                            $("#request").show();
+                        }
                         if(result[i]['status'] == 1) {
                             $("#"+result[i]['id']).removeClass('button-flat-caution');
                             $("#"+result[i]['id']).addClass('button-flat-primary');
@@ -195,6 +216,6 @@
                 }
             });
         }
-        status_update();
+        //status_update();
     </script>
 @endsection

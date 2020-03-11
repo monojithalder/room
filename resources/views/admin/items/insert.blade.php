@@ -41,6 +41,15 @@
                                     <input type="text" class="form-control" id="name" name="input_pin" placeholder="Input Pin">
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="name" class="col-sm-2 control-label">Item Type</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="item_type">
+                                        <option value="regulate" @if(isset($data['item_type']) && $data['item_type'] == 'regulate') selected="selected" @endif>Regulate</option>
+                                        <option value="normal" @if(isset($data['item_type']) && $data['item_type'] == 'normal') selected="selected" @endif>Normal</option>
+                                    </select>
+                                </div>
+                            </div>
                             <input type="hidden" name="on_off_status" value="ON">
                             <div class="form-group">
                                 <label for="name" class="col-sm-2 control-label">Room</label>
