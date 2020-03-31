@@ -91,9 +91,18 @@
                                             </li>
                                         @else
                                              <li>
-                                                <a href="#" id="{{ $item['id'] }}" onclick="task('{{ $item['id'] }}','{{ $item['output_pin'] }}')" class="button button-rounded @if($item['on_off_status'] == 'ON')button-flat-primary @else button-flat-caution @endif">{{ $item['name'] }}</a>
+                                                <a href="#" id="{{ $item['id'] }}" onclick="regulate_task('{{ $item['id'] }}','{{ $item['output_pin'] }}')" class="button button-rounded @if($item['on_off_status'] == 'ON')button-flat-primary @else button-flat-caution @endif">{{ $item['name'] }}</a>
+                                                 <input list="mapsettings" onchange="regulate_item('{{ $item['id'] }}','{{ $item['output_pin'] }}')" type="range" data-item-pin="{{ $item['output_pin'] }}" min="120" max="255" value="1" id="range-{{ $item['id'] }}">
+                                                 <datalist id=mapsettings>
+                                                     <option value="120" label="0%">120</option>
+                                                     <option>135</option>
+                                                     <option>150</option>
+                                                     <option>170</option>
+                                                     <option>200</option>
+                                                     <option>255</option>
+                                                 </datalist>
                                              </li>
-                                             <input type="range" min="1" max="100" value="1" id="range-{{ $item['id'] }}">
+
                                         @endif
 
                                     @endforeach
@@ -157,6 +166,85 @@
                     }
                     if(result.refresh_status == 1 ){
                         location.reload();
+                    }
+                    console.log(result);
+                }
+            });
+        }
+        function regulate_task(id,pin) {
+            var ip_address = $('#ip_address').val();
+            var regulate_value = $("#range-"+id).val();
+            var url = "{{ URL::to('/regulate-task') }}" + "/" + id + "/" + pin +"/" + ip_address + "/" + regulate_value;
+            $("#loader").css("display","block");
+            var range_id = "range-"+id;
+            $.ajax({
+                url: url, success: function (result) {
+                    result = JSON.parse(result);
+                    $("#loader").css("display","none");
+                    if(result.success == 1) {
+                        $("#"+range_id).val(255);
+                        $("#alert-success").addClass('show');
+                        $("#alert-success").removeClass('hide');
+
+                        $("#alert-error").addClass('hide');
+                        $("#alert-error").removeClass('show');
+                        if(result.request == 1) {
+                            $("#request").show();
+                        }
+                        else {
+                            $("#request").hide();
+                        }
+                        if(result.status == 'ON') {
+                            $("#"+id).removeClass('button-flat-caution');
+                            $("#"+id).addClass('button-flat-primary');
+                        }
+                        else {
+                            $("#"+id).addClass('button-flat-caution');
+                            $("#"+id).removeClass('button-flat-primary');
+                        }
+                        setTimeout(function () {
+                            $("#alert-success").addClass('hide');
+                            $("#alert-success").removeClass('show');
+                        }, 3000);
+                    }
+                    else {
+                        $("#alert-success").addClass('hide');
+                        $("#alert-success").removeClass('show');
+
+                        $("#alert-error").addClass('show');
+                        $("#alert-error").removeClass('hide');
+                        setTimeout(function () {
+                            $("#alert-error").addClass('hide');
+                            $("#alert-error").removeClass('show');
+                        }, 3000);
+                    }
+                    if(result.refresh_status == 1 ){
+                        location.reload();
+                    }
+                    console.log(result);
+                }
+            });
+        }
+        function regulate_item(id,pin) {
+            var ip_address = $('#ip_address').val();
+            var regulate_value = $("#range-"+id).val();
+            var url = "{{ URL::to('/regulate-item') }}" + "/" + id + "/" + pin +"/" + ip_address + "/" + regulate_value;
+            $("#loader").css("display","block");
+            $.ajax({
+                url: url, success: function (result) {
+                    result = JSON.parse(result);
+                    $("#loader").css("display","none");
+                    if(result.success == 1) {
+                        setTimeout(function () {
+                            $("#alert-success").addClass('hide');
+                            $("#alert-success").removeClass('show');
+                        }, 3000);
+                    }
+                    else {
+                        setTimeout(function () {
+                            $("#alert-error").addClass('hide');
+                            $("#alert-error").removeClass('show');
+                        }, 3000);
                     }
                     console.log(result);
                 }

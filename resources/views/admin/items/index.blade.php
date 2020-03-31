@@ -51,7 +51,7 @@
                     </td>
                     <td>
                         <p>
-                            @php($deleteUrl = "/admin/item/delete/" . $item->id)
+                            @php($deleteUrl = URL::to('/admin/item/delete/')."/". $item->id)
                             <button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal"
                                     data-target="#delete" data-placement="top" rel="tooltip" onclick="return confirmDelete('{{ $deleteUrl }}')">
                                 <span class="glyphicon glyphicon-trash"></span>
