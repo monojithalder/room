@@ -249,7 +249,7 @@ class UserController extends Controller
                 "on_off_status" => $item_status
             ]);
             $i++;
-            sleep(4);
+            ///sleep(4);
         }
         return json_encode($return_array);
     }
