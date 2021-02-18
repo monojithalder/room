@@ -47,22 +47,28 @@
     <script>
         function fetch_water_level() {
             var url = "http://"+"{{ $data['ip'] }}" + "/waterLavel";
+            var high_level = "{{ $data['high_level'] }}";
             $.ajax({
                 url: url, success: function (result) {
                     result = result.replace("'", '"');
                     result = result.replace("'", '"');
                     result = JSON.parse(result);
-                    var result_full = 100;
-                    var result_percentage = 0;
+                    var reverse_distance = (result.water_level - high_level);
+                    if(reverse_distance < 0) {
+                        reverse_distance = 0;
+                    }
+                    var reverse_percentage = (31 * reverse_distance) / 100;
+                    reverse_percentage = (100 - reverse_percentage);
+                    /*var result_percentage = 0;
                     result_percentage = (100 * result.water_level) / 100;
-                    result_percentage = 100 - result_percentage;
+                    result_percentage = 100 - result_percentage;*/
                     var css_full = 152;
-                    var css_water_lavel = (152 * result_percentage) / 100;
+                    var css_water_lavel = (css_full * reverse_percentage) / 100;
                     if(css_water_lavel < 0) {
                         css_water_lavel = 0;
                     }
                     $(".fill").height(css_water_lavel)
-                    $(".fill span").html(result_percentage+"% (" + result.water_level + ")");
+                    $(".fill span").html(reverse_percentage+"% (" + result.water_level + ")");
                     console.log(result);
                 }
             });

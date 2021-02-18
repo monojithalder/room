@@ -282,6 +282,7 @@ class AdminController extends Controller
             $master_control = $pump_settings_data[0]['master_control'];
         }
         $data['master_control'] = $master_control;
+        $data['high_level'] = $pump_settings_data[0]['tank_high_value'];
         return view('admin.pump.show',compact('data'));
 	}
 
