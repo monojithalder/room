@@ -38,5 +38,6 @@ class CronController extends Controller
                     "last_selected_pump_time" => time()]);
             }
         }
+        echo "{\"success\" : \"1\"}";
     }
 }

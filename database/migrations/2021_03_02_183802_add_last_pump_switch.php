@@ -15,8 +15,8 @@ class AddLastPumpSwitch extends Migration
     {
         Schema::table('pump', function (Blueprint $table) {
             $table->string('pump_running_status');
-            $table->string('last_selected_pump');
-            $table->string('last_selected_pump_time');
+            $table->string('last_selected_pump')->default(1);
+            $table->string('last_selected_pump_time')->default(0);
         });
     }
 

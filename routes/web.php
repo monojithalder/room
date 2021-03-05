@@ -82,6 +82,7 @@ Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
     Route::post('/pump/settings', 'AdminController@pumpSettings');
     Route::post('/pump/master-control', 'AdminController@pumpMasterControl');
     Route::get('/pump/debug', 'AdminController@pumpDebug');
+    Route::post('/pump/change-pump', 'AdminController@changePump');
 
 });
 Route::get('api/pump-status','AdminController@updatePumpRunningStatus');

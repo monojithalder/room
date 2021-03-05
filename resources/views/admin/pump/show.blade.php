@@ -26,15 +26,24 @@
         margin-left: 66px;
         color: #fff;
     }
+    .red {
+        background-color: #FF0000;
+    }
+    .green {
+        background-color: #33CC00;
+    }
 </style>
 
 @section('content')
     <div class="container">
         <input type="button" class="btn btn-primary" value="Refresh" onclick="refresh();">
         <input type="button" id="master_controll" class="btn @if($data['master_control'] == 0) btn-primary @else btn-warning @endif" value="@if($data['master_control'] == 0) ON @else OFF @endif" onclick="master_control();">
+        <input type="button" id="change_pump" class="btn btn-primary" value="Change Pump" onclick="change_pump();">
         <div>
             <p>Reserver Water Lavel: <span id="reserver-status">...</span></p>
-            <p>Pump: <span id="pump-on-status">...</span></p>
+            <p>Pump: @if($data['pump_running_status'] == 0) <span class="red">OFF</span> @else <span class="green">ON</span> @endif</p>
+            <p>Selected Pump is: Pump{{ $data['last_selected_pump'] }}</p>
+
         </div>
         <div id="watertank">
             <div class="fill">
@@ -74,7 +83,7 @@
             });
         }
 
-        function fetch_pump_status() {
+/*        function fetch_pump_status() {
             var url = "http://"+"{{ $data['ip'] }}" + "/status?type=PUMP";
             $.ajax({
                 url: url, success: function (result) {
@@ -91,7 +100,7 @@
                     console.log(result);
                 }
             });
-        }
+        }*/
         function fetch_reserver_status() {
             var url = "http://"+"{{ $data['ip'] }}" + "/status?type=RESERVER";
             $.ajax({
@@ -112,7 +121,7 @@
         //setInterval(fetch_pump_status,1000);
         //setInterval(fetch_reserver_status,1000);
         fetch_water_level();
-        fetch_pump_status();
+        //fetch_pump_status();
         fetch_reserver_status();
 
         function refresh() {
@@ -141,6 +150,35 @@
                     }
                     else {
                         $("#master_controll").attr('value', 'ON');
+                    }
+                    //data - response from server
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+
+                }
+            });
+        }
+        
+        function change_pump() {
+            $.ajax({
+                url : "pump/change-pump",
+                type: "POST",
+                data : null,
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                success: function(data, textStatus, jqXHR)
+                {
+                    console.log(data);
+                    var a =0;
+                    data = JSON.parse(data);
+                    if(data.success == 1) {
+                        alert("Pump is changed");
+                        window.location.reload();
+                    }
+                    else {
+                        alert(data.err_msg);
                     }
                     //data - response from server
                 },
