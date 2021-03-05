@@ -9,6 +9,7 @@
         font-family: Arial, Helvetica, sans-serif;
         border-collapse: collapse;
         width: 100%;
+        margin-bottom: 20px;
     }
 
     #customers td, #customers th {
@@ -26,6 +27,9 @@
         text-align: left;
         background-color: #4CAF50;
         color: white;
+    }
+    .container {
+        margin-bottom: 50px;
     }
 </style>
 
@@ -47,6 +51,25 @@
             @endforeach
             </tbody>
         </table>
+        <table id="customers">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Status</th>
+                <th>Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($log_data as $value)
+                <tr>
+                    <td>{{ $value->id }}</td>
+                    <td>{{ $value->status }}</td>
+                    <td>{{ date('d-m-Y H:i:s',$value->log_time) }}</td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+        {{ $log_data->links() }}
     </div>
 @endsection
 

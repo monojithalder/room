@@ -47,6 +47,12 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="name" class="col-sm-2 control-label">Server Ip</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="server_ip" name="server_ip" placeholder="Server IP" value="{{ $data['server_ip'] }}">
+                                </div>
+                            </div>
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <div class="form-group">
                                 <div class="col-sm-12" style="display: flex;justify-content: flex-end">

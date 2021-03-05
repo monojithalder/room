@@ -84,3 +84,5 @@ Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
     Route::get('/pump/debug', 'AdminController@pumpDebug');
 
 });
+Route::get('api/pump-status','AdminController@updatePumpRunningStatus');
+Route::get('cron/select-pump','CronController@selectPump');
