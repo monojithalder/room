@@ -37,7 +37,7 @@
 @section('content')
     <div class="container">
         <input type="button" class="btn btn-primary" value="Refresh" onclick="refresh();">
-        <input type="button" id="master_controll" class="btn @if($data['master_control'] == 0) btn-primary @else btn-warning @endif" value="@if($data['master_control'] == 0) ON @else OFF @endif" onclick="master_control();">
+        <input type="button" id="master_controll" class="btn @if($data['master_control'] == 0) red @else green @endif" value="@if($data['master_control'] == 0) ON @else OFF @endif" onclick="master_control();">
         <input type="button" id="change_pump" class="btn btn-primary" value="Change Pump" onclick="change_pump();">
         <div>
             <p>Reserver Water Lavel: <span id="reserver-status">...</span></p>
@@ -147,9 +147,13 @@
                     data = JSON.parse(data);
                     if(data.master_control == 1) {
                         $("#master_controll").attr('value', 'OFF');
+                        $("#master_controll").removeClass("red");
+                        $("#master_controll").addClass("green");
                     }
                     else {
                         $("#master_controll").attr('value', 'ON');
+                        $("#master_controll").removeClass("green");
+                        $("#master_controll").addClass("red");
                     }
                     //data - response from server
                 },

@@ -275,16 +275,20 @@ class AdminController extends Controller
         $data['last_selected_pump']  = $pump_data[0]['last_selected_pump'];
         $pump_settings = new PumpSettings();
         $pump_settings_data = $pump_settings->get()->toArray();
-        $master_control = 0;
-        if(empty($pump_settings_data[0]['master_control'])) {
-            $pump_settings->find(1)->update([
-                'master_control' => 0,
-            ]);
-        }
-        else {
-            $master_control = $pump_settings_data[0]['master_control'];
-        }
-        $data['master_control'] = $master_control;
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => 'http://'.$data['ip'].'/getMasterControl',
+            CURLOPT_USERAGENT => 'Pump Settings'
+        ]);
+        $resp = curl_exec($curl);
+        $resp = json_decode($resp,1);
+        curl_close($curl);
+        $data['master_control'] = $resp['master_control'];
+        $pump_settings->find(1)->update([
+            'master_control' => $data['master_control']
+        ]);
         $data['high_level'] = $pump_settings_data[0]['tank_high_value'];
         return view('admin.pump.show',compact('data'));
 	}
@@ -377,6 +381,10 @@ class AdminController extends Controller
         $pump_settings = new PumpSettings();
         $pump_settings_data = $pump_settings->get()->toArray();
         $master_control = $pump_settings_data[0]['master_control'];
+        $send_data = 0;
+        if($master_control == 0) {
+            $send_data = 1;
+        }
         $pump = new Pump();
         $pump_data = $pump->where('id','=',1)->get()->toArray();
         $ip = $pump_data[0]['ip'];
@@ -384,7 +392,7 @@ class AdminController extends Controller
         // Set some options - we are passing in a useragent too here
         curl_setopt_array($curl, [
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => 'http://'.$ip.'/masterControl?item_no='.!$master_control,
+            CURLOPT_URL => 'http://'.$ip.'/setMasterControl?item_no='.$send_data,
             CURLOPT_USERAGENT => 'Master Control'
         ]);
         // Send the request & save response to $resp
@@ -392,10 +400,10 @@ class AdminController extends Controller
         $resp = json_decode($resp,1);
         if($resp['success'] == 1) {
             $pump_settings->find(1)->update([
-                'master_control' => !$master_control
+                'master_control' => $send_data
             ]);
         }
-        return '{"master_control" : '.!$master_control.'}';
+        return '{"master_control" : '.$send_data.'}';
 	}
 
     public function pumpDebug()
