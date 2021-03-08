@@ -57,6 +57,7 @@
                 <th>Id</th>
                 <th>Status</th>
                 <th>Time</th>
+                <th>Water Level</th>
             </tr>
             </thead>
             <tbody>
@@ -65,6 +66,7 @@
                     <td>{{ $value->id }}</td>
                     <td>{{ $value->status }}</td>
                     <td>{{ date('d-m-Y H:i:s',$value->log_time) }}</td>
+                    <td>{{ $value->water_level }}</td>
                 </tr>
             @endforeach
             </tbody>

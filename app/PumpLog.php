@@ -8,5 +8,5 @@ class PumpLog extends Model
 {
     public $timestamps = FALSE;
     protected $table = "pump_log";
-    protected $fillable = ['id','status','log_time'];
+    protected $fillable = ['id','status','log_time','water_level'];
 }
