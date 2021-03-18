@@ -58,15 +58,17 @@
                 <th>Status</th>
                 <th>Time</th>
                 <th>Water Level</th>
+                <th>Pump</th>
             </tr>
             </thead>
             <tbody>
             @foreach($log_data as $value)
                 <tr>
                     <td>{{ $value->id }}</td>
-                    <td>{{ $value->status }}</td>
+                    <td>@if($value->status == 1) ON @else OFF @endif</td>
                     <td>{{ date('d-m-Y H:i:s',$value->log_time) }}</td>
                     <td>{{ $value->water_level }}</td>
+                    <td>Pump {{ $value->pump }}</td>
                 </tr>
             @endforeach
             </tbody>

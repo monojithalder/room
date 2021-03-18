@@ -430,11 +430,13 @@ class AdminController extends Controller
     {
         $pump_running_status = $request->input("status");
         $water_level = $request->input('water_level');
+        $pump = $request->input('pump');
         Pump::where("id","=",1)->update(["pump_running_status" => $pump_running_status]);
         PumpLog::create([
             'status' => $pump_running_status,
             'log_time' => time(),
             'water_level' => $water_level,
+            'pump' => $pump
         ]);
         echo '{"Success" : "1"}';
 	}
