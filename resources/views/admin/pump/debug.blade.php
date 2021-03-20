@@ -66,7 +66,7 @@
                 <tr>
                     <td>{{ $value->id }}</td>
                     <td>@if($value->status == 1) ON @else OFF @endif</td>
-                    <td>{{ date('d-m-Y H:i:s',$value->log_time) }}</td>
+                    <td>{{ date('d-m-Y h:i:s a',$value->log_time) }}</td>
                     <td>{{ $value->water_level }}</td>
                     <td>Pump {{ $value->pump }}</td>
                 </tr>
