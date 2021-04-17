@@ -438,6 +438,24 @@ class AdminController extends Controller
             'water_level' => $water_level,
             'pump' => $pump
         ]);
+        $pump_data = Pump::where('id','=',1)->get()->toArray();
+        $last_selected_pump  = $pump_data[0]['last_selected_pump'];
+        $ip = $pump_data[0]['ip'];
+        if($pump_running_status == 0) {
+            if($last_selected_pump == 1) {
+                $select_pump = 2;
+            }
+            else {
+                $select_pump = 1;
+            }
+            $cURLConnection = curl_init();
+            curl_setopt($cURLConnection, CURLOPT_URL, 'http://'.$ip.'/selectPump?select_pump='.$select_pump);
+            curl_setopt($cURLConnection, CURLOPT_RETURNTRANSFER, true);
+            $return_data = curl_exec($cURLConnection);
+            curl_close($cURLConnection);
+            Pump::where("id",'=',1)->update(['last_selected_pump' => $select_pump,
+                "last_selected_pump_time" => time()]);
+        }
         echo '{"Success" : "1"}';
 	}
 
