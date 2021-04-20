@@ -431,6 +431,8 @@ class AdminController extends Controller
         $pump_running_status = $request->input("status");
         $water_level = $request->input('water_level');
         $pump = $request->input('pump');
+        $bot_id = config('app.telegram_bot_id');
+        $group_id = config('app.telegram_group_id');
         Pump::where("id","=",1)->update(["pump_running_status" => $pump_running_status]);
         PumpLog::create([
             'status' => $pump_running_status,
@@ -455,6 +457,26 @@ class AdminController extends Controller
             curl_close($cURLConnection);
             Pump::where("id",'=',1)->update(['last_selected_pump' => $select_pump,
                 "last_selected_pump_time" => time()]);
+
+            //This is for send message in telegram.
+            $pump_settings = new PumpSettings();
+            $pump_settings_data = $pump_settings->get()->toArray();
+            $water_percentage = 100 - $this->map($water_level,$pump_settings_data[0]['tank_high_value'],100,0,100);
+            $message = "Pump ".$pump." Is Turn OFF at ".$water_percentage."%";
+            $cURLConnection = curl_init();
+            curl_setopt($cURLConnection, CURLOPT_URL, 'https://api.telegram.org/bot'. $bot_id .'/sendMessage?chat_id='. $group_id .'&parse_mode=Markdown&text='. $message);
+            curl_setopt($cURLConnection, CURLOPT_RETURNTRANSFER, true);
+            $return_data = curl_exec($cURLConnection);
+            curl_close($cURLConnection);
+        }
+        else {
+            $water_percentage = 100 - $water_level;
+            $message = "Pump ".$pump." Is Turn ON at ".$water_percentage."%";
+            $cURLConnection = curl_init();
+            curl_setopt($cURLConnection, CURLOPT_URL, 'https://api.telegram.org/bot'. $bot_id .'/sendMessage?chat_id='. $group_id .'&parse_mode=Markdown&text='. $message);
+            curl_setopt($cURLConnection, CURLOPT_RETURNTRANSFER, true);
+            $return_data = curl_exec($cURLConnection);
+            curl_close($cURLConnection);
         }
         echo '{"Success" : "1"}';
 	}
@@ -491,4 +513,7 @@ class AdminController extends Controller
         }
         return $return_data;
 	}
+    public function map($x, $in_min, $in_max, $out_min, $out_max) {
+        return ($x - $in_min) * ($out_max - $out_min) / ($in_max - $in_min) + $out_min;
+    }
 }

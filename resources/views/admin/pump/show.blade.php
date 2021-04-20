@@ -73,7 +73,7 @@
                     }
                     var result_percentage = 0;
                     result_percentage = (100 * result.water_level) / 100;
-                    result_percentage = 100 - result_percentage;
+                    result_percentage = 100 - Math.ceil(map(result.water_level,high_level,100,0,100));
                     var css_full = 152;
                     var css_water_lavel = (css_full * result_percentage) / 100;
                     if(css_water_lavel < 0) {
@@ -194,6 +194,9 @@
 
                 }
             });
+        }
+        function map($x, $in_min, $in_max, $out_min, $out_max) {
+            return ($x - $in_min) * ($out_max - $out_min) / ($in_max - $in_min) + $out_min;
         }
     </script>
 @endsection

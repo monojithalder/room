@@ -125,6 +125,10 @@ return [
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
+    'telegram_bot_id' =>  env('TELEGRAM_BOT_API_KEY'),
+
+    'telegram_group_id' => env("TELEGRAM_GROUP_ID"),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
