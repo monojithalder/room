@@ -431,6 +431,8 @@ class AdminController extends Controller
         $pump_running_status = $request->input("status");
         $water_level = $request->input('water_level');
         $pump = $request->input('pump');
+        $top_level = $request->input('top_level');
+        $low_level = $request->input('low_level');
         $bot_id = config('app.telegram_bot_id');
         $group_id = config('app.telegram_group_id');
         Pump::where("id","=",1)->update(["pump_running_status" => $pump_running_status]);
@@ -464,7 +466,8 @@ class AdminController extends Controller
             $water_percentage = 100 - $this->map($water_level,$pump_settings_data[0]['tank_high_value'],100,0,100);
             $message = "Pump ".$pump." Is Turn OFF at ".$water_percentage."%";
             $cURLConnection = curl_init();
-            curl_setopt($cURLConnection, CURLOPT_URL, 'https://api.telegram.org/bot'. $bot_id .'/sendMessage?chat_id='. $group_id .'&parse_mode=Markdown&text='. $message);
+            curl_setopt($cURLConnection, CURLOPT_URL, 'https://api.telegram.org/bot'. $bot_id .'/sendMessage?chat_id='.
+                $group_id .'&parse_mode=Markdown&text='. $message.'&top_level='.$top_level.'&low_level='.$low_level);
             curl_setopt($cURLConnection, CURLOPT_RETURNTRANSFER, true);
             $return_data = curl_exec($cURLConnection);
             curl_close($cURLConnection);
@@ -473,7 +476,8 @@ class AdminController extends Controller
             $water_percentage = 100 - $water_level;
             $message = "Pump ".$pump." Is Turn ON at ".$water_percentage."%";
             $cURLConnection = curl_init();
-            curl_setopt($cURLConnection, CURLOPT_URL, 'https://api.telegram.org/bot'. $bot_id .'/sendMessage?chat_id='. $group_id .'&parse_mode=Markdown&text='. $message);
+            curl_setopt($cURLConnection, CURLOPT_URL, 'https://api.telegram.org/bot'. $bot_id .'/sendMessage?chat_id='. $group_id .
+                '&parse_mode=Markdown&text='. $message.'&top_level='.$top_level.'&low_level='.$low_level);
             curl_setopt($cURLConnection, CURLOPT_RETURNTRANSFER, true);
             $return_data = curl_exec($cURLConnection);
             curl_close($cURLConnection);
