@@ -464,20 +464,20 @@ class AdminController extends Controller
             $pump_settings = new PumpSettings();
             $pump_settings_data = $pump_settings->get()->toArray();
             $water_percentage = 100 - $this->map($water_level,$pump_settings_data[0]['tank_high_value'],100,0,100);
-            $message = "Pump ".$pump." Is Turn OFF at ".$water_percentage."%";
+            $message = "Pump ".$pump." Is Turn OFF at ".$water_percentage."% TOP LEVEL = ".$top_level.", LOW LEVEL = ".$low_level;
             $cURLConnection = curl_init();
             curl_setopt($cURLConnection, CURLOPT_URL, 'https://api.telegram.org/bot'. $bot_id .'/sendMessage?chat_id='.
-                $group_id .'&parse_mode=Markdown&text='. $message.'&top_level='.$top_level.'&low_level='.$low_level);
+                $group_id .'&parse_mode=Markdown&text='. $message);
             curl_setopt($cURLConnection, CURLOPT_RETURNTRANSFER, true);
             $return_data = curl_exec($cURLConnection);
             curl_close($cURLConnection);
         }
         else {
             $water_percentage = 100 - $water_level;
-            $message = "Pump ".$pump." Is Turn ON at ".$water_percentage."%";
+            $message = "Pump ".$pump." Is Turn ON at ".$water_percentage."% TOP LEVEL = ".$top_level.", LOW LEVEL = ".$low_level;
             $cURLConnection = curl_init();
             curl_setopt($cURLConnection, CURLOPT_URL, 'https://api.telegram.org/bot'. $bot_id .'/sendMessage?chat_id='. $group_id .
-                '&parse_mode=Markdown&text='. $message.'&top_level='.$top_level.'&low_level='.$low_level);
+                '&parse_mode=Markdown&text='. $message);
             curl_setopt($cURLConnection, CURLOPT_RETURNTRANSFER, true);
             $return_data = curl_exec($cURLConnection);
             curl_close($cURLConnection);
