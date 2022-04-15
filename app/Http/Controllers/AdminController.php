@@ -10,6 +10,7 @@ use App\Pump;
 use Illuminate\Http\Request;
 use App\PumpSettings;
 use App\PumpLog;
+use App\ErrorLog;
 
 class AdminController extends Controller
 {
@@ -428,61 +429,77 @@ class AdminController extends Controller
 
     public function updatePumpRunningStatus(Request $request)
     {
-        $pump_running_status = $request->input("status");
-        $water_level = $request->input('water_level');
-        $pump = $request->input('pump');
-        $top_level = $request->input('top_level');
-        $low_level = $request->input('low_level');
-        $bot_id = config('app.telegram_bot_id');
-        $group_id = config('app.telegram_group_id');
-        Pump::where("id","=",1)->update(["pump_running_status" => $pump_running_status]);
-        PumpLog::create([
-            'status' => $pump_running_status,
-            'log_time' => time(),
-            'water_level' => $water_level,
-            'pump' => $pump
-        ]);
-        $pump_data = Pump::where('id','=',1)->get()->toArray();
-        $last_selected_pump  = $pump_data[0]['last_selected_pump'];
-        $ip = $pump_data[0]['ip'];
-        if($pump_running_status == 0) {
-            if($last_selected_pump == 1) {
-                $select_pump = 2;
+        $error = 0;
+        $error_msg = "";
+        try {
+            $pump_running_status = $request->input("status");
+            $water_level = $request->input('water_level');
+            $pump = $request->input('pump');
+            $top_level = $request->input('top_level');
+            $low_level = $request->input('low_level');
+            $bot_id = config('app.telegram_bot_id');
+            $group_id = config('app.telegram_group_id');
+            Pump::where("id", "=", 1)->update(["pump_running_status" => $pump_running_status]);
+            PumpLog::create([
+                'status' => $pump_running_status,
+                'log_time' => time(),
+                'water_level' => $water_level,
+                'pump' => $pump
+            ]);
+            $pump_data = Pump::where('id', '=', 1)->get()->toArray();
+            $last_selected_pump = $pump_data[0]['last_selected_pump'];
+            $ip = $pump_data[0]['ip'];
+            if ($pump_running_status == 0) {
+                if ($last_selected_pump == 1) {
+                    $select_pump = 2;
+                } else {
+                    $select_pump = 1;
+                }
+                $cURLConnection = curl_init();
+                curl_setopt($cURLConnection, CURLOPT_URL, 'http://' . $ip . '/selectPump?select_pump=' . $select_pump);
+                curl_setopt($cURLConnection, CURLOPT_RETURNTRANSFER, true);
+                $return_data = curl_exec($cURLConnection);
+                curl_close($cURLConnection);
+                Pump::where("id", '=', 1)->update(['last_selected_pump' => $select_pump,
+                    "last_selected_pump_time" => time()]);
+
+                //This is for send message in telegram.
+                $pump_settings = new PumpSettings();
+                $pump_settings_data = $pump_settings->get()->toArray();
+                $water_percentage = 100 - $this->map($water_level, $pump_settings_data[0]['tank_high_value'], 100, 0, 100);
+                $message = "Pump " . $pump . " Is Turn OFF at " . $water_percentage . "% TOP LEVEL = " . $top_level . ", LOW LEVEL = " . $low_level;
+                $cURLConnection = curl_init();
+                curl_setopt($cURLConnection, CURLOPT_URL, 'https://api.telegram.org/bot' . $bot_id . '/sendMessage?chat_id=' .
+                    $group_id . '&parse_mode=Markdown&text=' . $message);
+                curl_setopt($cURLConnection, CURLOPT_RETURNTRANSFER, true);
+                $return_data = curl_exec($cURLConnection);
+                curl_close($cURLConnection);
+            } else {
+                $water_percentage = 100 - $water_level;
+                $message = "Pump " . $pump . " Is Turn ON at " . $water_percentage . "% TOP LEVEL = " . $top_level . ", LOW LEVEL = " . $low_level;
+                $cURLConnection = curl_init();
+                curl_setopt($cURLConnection, CURLOPT_URL, 'https://api.telegram.org/bot' . $bot_id . '/sendMessage?chat_id=' . $group_id .
+                    '&parse_mode=Markdown&text=' . $message);
+                curl_setopt($cURLConnection, CURLOPT_RETURNTRANSFER, true);
+                $return_data = curl_exec($cURLConnection);
+                curl_close($cURLConnection);
+            }
+        }
+        catch (\Exception $e) {
+            $error = 1;
+            $error_msg = $e->getMessage();
+        }
+        finally {
+            if ($error == 0) {
+                echo '{"Success" : "1"}';
             }
             else {
-                $select_pump = 1;
+                ErrorLog::create([
+                    'log' => $error_msg
+                ]);
+                echo '{"Success" : "0"}';
             }
-            $cURLConnection = curl_init();
-            curl_setopt($cURLConnection, CURLOPT_URL, 'http://'.$ip.'/selectPump?select_pump='.$select_pump);
-            curl_setopt($cURLConnection, CURLOPT_RETURNTRANSFER, true);
-            $return_data = curl_exec($cURLConnection);
-            curl_close($cURLConnection);
-            Pump::where("id",'=',1)->update(['last_selected_pump' => $select_pump,
-                "last_selected_pump_time" => time()]);
-
-            //This is for send message in telegram.
-            $pump_settings = new PumpSettings();
-            $pump_settings_data = $pump_settings->get()->toArray();
-            $water_percentage = 100 - $this->map($water_level,$pump_settings_data[0]['tank_high_value'],100,0,100);
-            $message = "Pump ".$pump." Is Turn OFF at ".$water_percentage."% TOP LEVEL = ".$top_level.", LOW LEVEL = ".$low_level;
-            $cURLConnection = curl_init();
-            curl_setopt($cURLConnection, CURLOPT_URL, 'https://api.telegram.org/bot'. $bot_id .'/sendMessage?chat_id='.
-                $group_id .'&parse_mode=Markdown&text='. $message);
-            curl_setopt($cURLConnection, CURLOPT_RETURNTRANSFER, true);
-            $return_data = curl_exec($cURLConnection);
-            curl_close($cURLConnection);
         }
-        else {
-            $water_percentage = 100 - $water_level;
-            $message = "Pump ".$pump." Is Turn ON at ".$water_percentage."% TOP LEVEL = ".$top_level.", LOW LEVEL = ".$low_level;
-            $cURLConnection = curl_init();
-            curl_setopt($cURLConnection, CURLOPT_URL, 'https://api.telegram.org/bot'. $bot_id .'/sendMessage?chat_id='. $group_id .
-                '&parse_mode=Markdown&text='. $message);
-            curl_setopt($cURLConnection, CURLOPT_RETURNTRANSFER, true);
-            $return_data = curl_exec($cURLConnection);
-            curl_close($cURLConnection);
-        }
-        echo '{"Success" : "1"}';
 	}
 
     public function changePump()
