@@ -239,29 +239,37 @@ class UserController extends Controller
         $pin = $request->pin;
         $regulate_value = $request->regulate_value;
         $item = $item_model->where("id",'=',$id)->get()->toArray();
-        $item_status= $item[0]['on_off_status'];
-        $curl = curl_init();
-        $test = array("success"=>TRUE);
-        /*$post_fields = array('item_no' => $request->id);*/
-        $post_fields = array();
-        $url = "http://".$request->ip_address.'/processRegulateItemRequest?item_no='.$pin.'&regulate_value='.$regulate_value.'&status='.$item_status;
-        $port = env('PYTHON_SERVER_PORT','');
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-        $test = json_encode($test);
-        $response = curl_exec($curl);
-        //$response = '{"status" : "1"}';
-        $response = str_replace("'",'"',$response);
-        $response = json_decode($response, 1);
-        $item_model = new Item();
-        if($response['success'] == 1) {
+        if ($item[0]['item_code'] == 1) {
+            $task_command_string = $item[0]['output_pin']."-value-".$regulate_value;
+            $url = "http://" . $request->ip_address . '/processRequest?item_no=' . $task_command_string;
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+            $response = curl_exec($curl);
+            $response = json_decode($response,1);
+            if ($response['success'] == 1) {
 
-            echo '{"success": 1}';
+                echo '{"success": 1}';
+            } else {
+                echo '{"success" : 0}';
+            }
         }
         else {
-            echo '{"success" : 0}';
+            $item_status = $item[0]['on_off_status'];
+            $curl = curl_init();
+            $url = "http://" . $request->ip_address . '/processRegulateItemRequest?item_no=' . $pin . '&regulate_value=' . $regulate_value . '&status=' . $item_status;
+            curl_setopt($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+            $response = curl_exec($curl);
+            $response = str_replace("'", '"', $response);
+            $response = json_decode($response, 1);
+            if ($response['success'] == 1) {
+
+                echo '{"success": 1}';
+            } else {
+                echo '{"success" : 0}';
+            }
         }
-        //var_dump($response);
     }
 
     public function taskStatus(Request $request) {
