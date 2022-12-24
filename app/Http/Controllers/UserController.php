@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Floor;
 use App\Item;
 use App\Room;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -78,9 +79,10 @@ class UserController extends Controller
     public function task(Request $request){
         $id = $request->id;
         $pin = $request->pin;
-        $item = Item::find($id);
-        $item_array = $item->get()->toArray();
-        $item_array = $item_array[0];
+        $item_model = new Item();
+        $item = $item_model->where('id', '=', $id)->get()->toArray();
+        //$item_array = $item->get()->toArray();
+        $item_array = $item[0];
         if ($item_array['item_code'] == 1) {
             $command_string = $item_array['output_pin']."-digitalstatus";
             $curl = curl_init();
@@ -90,7 +92,7 @@ class UserController extends Controller
             $response = curl_exec($curl);
             $response = json_decode($response,1);
             $item_status = "off";
-            if ($response['pin_status'] == 1) {
+            if ($response['pin_status'] == 0) {
                 $item_status = "on";
             }
             $task_command_string = $item_array['output_pin']."-".$item_status;

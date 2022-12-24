@@ -1,0 +1,12 @@
+name: homeautomation
+recipe: laravel
+config:
+  webroot: public
+  php: '7.4'
+services:
+  appserver:
+    xdebug: true
+    config:
+      php: .lando/php.ini
+  pma:
+    type: phpmyadmin
