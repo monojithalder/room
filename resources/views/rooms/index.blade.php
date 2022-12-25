@@ -92,9 +92,12 @@
                                         @else
                                              <li>
                                                 <a href="#" id="{{ $item['id'] }}" onclick="regulate_task('{{ $item['id'] }}','{{ $item['output_pin'] }}')" class="button button-rounded @if($item['on_off_status'] == 'ON')button-flat-primary @else button-flat-caution @endif">{{ $item['name'] }}</a>
-                                                 <input list="mapsettings" onchange="regulate_item('{{ $item['id'] }}','{{ $item['output_pin'] }}')" type="range" data-item-pin="{{ $item['output_pin'] }}" min="120" max="255" value="1" id="range-{{ $item['id'] }}">
+                                                 <input list="mapsettings" onchange="regulate_item('{{ $item['id'] }}','{{ $item['output_pin'] }}')" type="range" data-item-pin="{{ $item['output_pin'] }}" min="0" max="255" value="1" id="range-{{ $item['id'] }}">
                                                  <datalist id=mapsettings>
-                                                     <option value="120" label="0%">120</option>
+                                                     <option value="0" label="0%">0</option>
+                                                     <option>30</option>
+                                                     <option>60</option>
+                                                     <option>100</option>
                                                      <option>135</option>
                                                      <option>150</option>
                                                      <option>170</option>
