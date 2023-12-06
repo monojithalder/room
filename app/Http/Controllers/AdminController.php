@@ -7,10 +7,13 @@ use App\Room;
 use App\User;
 use App\Item;
 use App\Pump;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\PumpSettings;
 use App\PumpLog;
 use App\ErrorLog;
+use App\TreePumpSettings;
+use App\TreePumpStatus;
 
 class AdminController extends Controller
 {
@@ -536,5 +539,51 @@ class AdminController extends Controller
 	}
     public function map($x, $in_min, $in_max, $out_min, $out_max) {
         return ($x - $in_min) * ($out_max - $out_min) / ($in_max - $in_min) + $out_min;
+    }
+
+    public function treePumpSettingsForm()
+    {
+        $pump_settings = new TreePumpSettings();
+        $pump_data = $pump_settings->get()->toArray();
+        $data = array();
+        if(!empty($pump_data)) {
+            $data['time1'] = $pump_data[0]['time1'];
+            $data['time2'] = $pump_data[0]['time2'];
+            $data['interval'] = $pump_data[0]['interval'];
+            $data['ip_address'] = $pump_data[0]['ip_address'];
+        }
+        else {
+            $pump_settings->create([
+                'time1' => 0,
+                'time2' => 0,
+                'interval' => 0,
+                'ip_address' => 0
+
+            ]);
+            $data['time1']  = 0;
+            $data['time2'] = 0;
+            $data['interval'] = 0;
+            $data['ip_address'] = 0;
+        }
+        return view('admin.tree_pump.settings',compact('data'));
+    }
+    public function treePumpSettings(Request $request)
+    {
+        $time1 =  $request->time1;
+        $time2 =  $request->time2;
+        $interval =  $request->interval;
+        $ip_address  = $request->ip_address;
+        $pump_settings = new TreePumpSettings();
+        $pump = new Pump();
+        $pump_data = $pump->where('id','=',1)->get()->toArray();
+        $ip = $pump_data[0]['ip'];
+
+        $pump_settings->find(1)->update([
+            'time1' => $time1,
+            'time2' => $time2,
+            'interval' => $interval,
+            'ip_address' => $ip_address,
+        ]);
+        return redirect('/admin/tree-pump/settings')->with('success','Tree Pump Settings Added Successfully.');
     }
 }

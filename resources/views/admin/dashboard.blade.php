@@ -142,6 +142,20 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="panel panel-lightgreen">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">Tree PUMP</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center" style="margin-top: 10px">
+                                            <button class="button button-rounded button-flat-action sink" onclick="location.href='{{ url('/admin/tree-pump/settings') }}'">
+                                                Settings
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                     </div>
                 </div>

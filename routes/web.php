@@ -84,6 +84,10 @@ Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
     Route::get('/pump/debug', 'AdminController@pumpDebug');
     Route::post('/pump/change-pump', 'AdminController@changePump');
 
+    Route::get('/tree-pump/settings', 'AdminController@treePumpSettingsForm');
+    Route::post('/tree-pump/settings', 'AdminController@treePumpSettings');
+
 });
 Route::get('api/pump-status','AdminController@updatePumpRunningStatus');
 Route::get('cron/select-pump','CronController@selectPump');
+Route::get('cron/on-off-tree-pump','CronController@onOffTreePump');
