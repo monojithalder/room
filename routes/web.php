@@ -91,3 +91,4 @@ Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
 Route::get('api/pump-status','AdminController@updatePumpRunningStatus');
 Route::get('cron/select-pump','CronController@selectPump');
 Route::get('cron/on-off-tree-pump','CronController@onOffTreePump');
+Route::get("/getHomeAlert","HomeSecurityController@getAlert");
