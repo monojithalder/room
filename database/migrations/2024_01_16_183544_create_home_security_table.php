@@ -16,6 +16,7 @@ class CreateHomeSecurityTable extends Migration
         Schema::create('home_security', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('code');
+            $table->integer('distance');
             $table->string('log');
             $table->timestamps();
         });

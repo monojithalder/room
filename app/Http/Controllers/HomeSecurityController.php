@@ -21,15 +21,17 @@ class HomeSecurityController extends Controller
 
         $code = $request->query("code");
         $status = $request->query("status");
+        $distance = $request->query("distance");
         $log = $code_array[$code]. " is ". ($status == 1 ? "closed" : "opened");
         $timestamp = Carbon::now();
         $home_security_model->create([
             "code" => $code,
             "log" => $log,
+            "distance" => $distance,
             "created_at" => $timestamp,
             "updated_at" => $timestamp
         ]);
-        $message = "Someone ".($status == 1 ? "closed" : "opened")." ".$code_array[$code];
+        $message = "Someone ".($status == 1 ? "closed" : "opened")." ".$code_array[$code]." With distance: ".$distance;
         $bot_id = config('app.telegram_bot_id');
         $group_id = "-4153633550";
         $cURLConnection = curl_init();

@@ -8,5 +8,5 @@ class HomeSecurity extends Model
 {
     protected $table = 'home_security';
     public $timestamps = TRUE;
-    protected $fillable = ['id','code','log'];
+    protected $fillable = ['id','code','distance','log'];
 }
