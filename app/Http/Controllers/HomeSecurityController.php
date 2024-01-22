@@ -40,5 +40,8 @@ class HomeSecurityController extends Controller
         curl_setopt($cURLConnection, CURLOPT_RETURNTRANSFER, true);
         $return_data = curl_exec($cURLConnection);
         curl_close($cURLConnection);
+        echo '{"success" : "1"}';
+
     }
+
 }
